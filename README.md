@@ -15,9 +15,9 @@
 * Consume the data
   * How to visualize and interpret the images?
   * What do the images tell us about the molten zone and its properties?
-  * What analyses give us the temperature and emissivity coefficients?
-    * How computationally expensive are these analyses?
-    * Can these analyses be automated directly from the images (using CNNs)?
   * How does the molten zone affect the growth and the crystal properties?
   * What parts of the images will we care about and how can we isolate them? For example, if we only care about the molten zone, can we automate removing all other parts of the image?
-  * Can we automatically adjust the growth based on analysis of these images as they come in?
+  * What analyses give us the temperature and emissivity coefficients?
+    * What parts of these analyses depend on the specific material in the growth, and what parts are general to any material?
+    * Can these analyses be automated directly from the images (is it feasible, what tools would it use)?
+    * Can we automatically adjust the growth based on analysis of these images as they come in (are the analyses computationally cheap enough to make this possible)?
