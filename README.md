@@ -1,10 +1,9 @@
 # reu2024-hyperspectral-camera
 ## Planning
-### General Steps and Questions
+### General Parts
 * Mount the camera
-  * Which furnace will it be mounted on? LDFZ (probably)
-  * What are the form factor and mounting mechanism of the camera? Need to measure dimensions and get a mount.
-    * Needs to support camera, have correct height, fit into the furnace's brackets.
+  * Which furnace will it be mounted on? LDFZ
+  * What are the form factor and mounting mechanism of the camera? Tyrel has a mount.
   * Is there any setup (software or hardware) that is needed to get the camera working and collecting images? perClass Mira
     * How do the people currently using the camera get images?
     * Are they taking single images, automated consecutive frames, etc.?
@@ -25,3 +24,12 @@
     * What parts of these analyses depend on the specific material in the growth, and what parts are general to any material?
     * Can these analyses be automated directly from the images (is it feasible, what tools would it use)?
     * Can we automatically adjust the growth based on analysis of these images as they come in (are the analyses computationally cheap enough to make this possible)?
+   
+### Current Steps
+* Play with camera and software, take sample images, get data, etc.
+  * Take an image with the camera
+  * Use the camera's software
+  * Get the images into a notebook
+* Look for multi-spectral pyrometry literature - Web of Science database
+* Figure out black-body radiation equation and get spectrum from image
+* Heat graphite / alumina in standard furnace, take image, and do analysis
