@@ -4,7 +4,6 @@
 * Mount the camera
   * Which furnace will it be mounted on? LDFZ (probably)
   * What are the form factor and mounting mechanism of the camera? Need to measure dimensions and get a mount.
-    * Can we design a mount and have the machine shop make it?
     * Needs to support camera, have correct height, fit into the furnace's brackets.
   * Is there any setup (software or hardware) that is needed to get the camera working and collecting images? perClass Mira
     * How do the people currently using the camera get images?
