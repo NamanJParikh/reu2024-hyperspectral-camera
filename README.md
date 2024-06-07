@@ -2,11 +2,14 @@
 ## Planning
 ### General Steps and Questions
 * Mount the camera
-  * Which furnace will it be mounted on?
-  * What are the form factor and mounting mechanism of the camera?
-  * Is there any setup (software or hardware) that is needed to get the camera working and collecting images?
+  * Which furnace will it be mounted on? LDFZ (probably)
+  * What are the form factor and mounting mechanism of the camera? Need to measure dimensions and get mount (machine shop can make a mount)
+  * Is there any setup (software or hardware) that is needed to get the camera working and collecting images? Hyperspec III software for lab use and remote sensing
+    * How do the people currently using the camera get images?
+    * Are they taking single images, automated consecutive frames, etc.?
+    * Can Hyperspec III run on the furnaces built-in computer?
 * Stream the data
-  * What system will manage the camera / receive its data?
+  * What system will manage the camera / receive its data? Try Hyperspec III software
   * How to access the camera's output?
   * How is the data formatted?
   * How are images captured (how often, what resolution, etc.)?
