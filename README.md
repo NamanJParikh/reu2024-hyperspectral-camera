@@ -30,6 +30,7 @@
   * Take an image with the camera
   * Use the camera's software
   * Get the images into a notebook
+    * What is the data format and is it possible to open without the company's app?
 * Look for multi-spectral pyrometry literature - Web of Science database
 * Figure out black-body radiation equation and get spectrum from image
 * Heat graphite / alumina in standard furnace, take image, and do analysis
