@@ -1,0 +1,6 @@
+# Data files #
+*.raw
+*.hdr
+
+# OS generated files #
+.DS_Store
