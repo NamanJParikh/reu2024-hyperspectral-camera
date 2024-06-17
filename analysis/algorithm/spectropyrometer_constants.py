@@ -29,19 +29,19 @@ C2 = 1.4384e7 # nm K
 max_poly_order = 4 # Maximum polynomial order to consider
 threshold = 1e-3 # Threshold before the fit is considered to be "bad"
 eps0 = 0.5 # Initial value for the emissivity coeff.
-ksplits = 10 # Number of k folds
+ksplits = 5 # Number of k folds (originally 10)
 
 ### Pixel and window length
 ## Window length
-window_length = 51 # Window length for the moving average
+window_length = 11 # Window length for the moving average (originally 51)
 #window_length = (int)(pix_slice+1) # alternative 
 
 ## Pixel slice
 lchosen = 58 # Number of pixels chosen
 # Total number of pixels to take into a slice
-pix_slice = (int)((3000 - 2*(window_length-1))/lchosen) 
+# pix_slice = (int)((3000 - 2*(window_length-1))/lchosen) 
 # Below are two alternatives that can be used if the total number of pixels
 # available is small 
-#pix_slice = 7
-#pix_slice = 1
+# pix_slice = 7
+pix_slice = 1
 
