@@ -39,9 +39,9 @@ window_length = 11 # Window length for the moving average (originally 51)
 ## Pixel slice
 lchosen = 58 # Number of pixels chosen
 # Total number of pixels to take into a slice
-pix_slice = (int)((250 - 2*(window_length-1))/lchosen) 
+# pix_slice = (int)((250 - 2*(window_length-1))/lchosen) 
 # Below are two alternatives that can be used if the total number of pixels
 # available is small 
-# pix_slice = 7
+pix_slice = 7
 # pix_slice = 1
 
