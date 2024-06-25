@@ -20,6 +20,7 @@ k = 1.380649e-23 # Boltzmann constant
 b = 2.89777e-3 # Wien's constant
 
 ### Other Global Variables ###
+image = None
 units = None
 wavelengths = None
 pixel = None
@@ -63,8 +64,8 @@ def load_data(paths, quiet=False):
     data_tensor = np.array(data_ref.load())
 
     corrected_data = np.divide(
-    np.subtract(data_tensor, dark_tensor),
-    np.subtract(white_tensor, dark_tensor))
+        np.subtract(data_tensor, dark_tensor),
+        np.subtract(white_tensor, dark_tensor))
 
     if not quiet:
         print(corrected_data)
@@ -97,6 +98,18 @@ def get_bands(paths, quiet=False):
 
     return None
 
+def display_image(quiet=False):
+    """Displays the hyperspectral image using spectralPy"""
+    print("Displaying image...")
+    if not quiet:
+        plt.figure()
+        imshow(image, (100,100,100))
+        plt.xticks([])
+        plt.yticks([])
+        plt.show()
+
+    return None
+
 def plot_spectrum(quiet=False):
     """Plots the selected spectrum
     Input: None (uses global variables), Output: None"""
@@ -118,7 +131,7 @@ def fit_spectrum(quiet=False):
     Input: None (uses global variables)
     Output: Fitted parameters, final least squares cost"""
     print("\nIf this test fails, check lower in this function to adjust wavelenght unit conversion to m")
-    print("Checking that units are nm...")
+    print("Checking that units are nm... ", end="")
     assert(units == "nm")
     print("Passed")
     print("Fitting spectrum...")
@@ -160,12 +173,15 @@ def fit_spectrum(quiet=False):
 ### Main ###
 
 def main():
+    global image
     global pixel
     global spectrum
     folder_path = input("Enter the file path to your hyperspectral data folder: ")
     paths = construct_paths(folder_path)
-    data = load_data(paths, quiet=True)
+    image = load_data(paths, quiet=True)
     _ = get_bands(paths, quiet=True)
+
+    _ = display_image()
 
     while True:
         pixel = input("\nEnter the pixel you want to analyze 'frame,position' or 'exit' to end program: ")
@@ -173,7 +189,7 @@ def main():
 
         pixel = np.array(pixel.split(","), dtype=np.int64)
         x, y = pixel[0], pixel[1]
-        spectrum = data[x][y]
+        spectrum = image[x][y]
         assert(len(spectrum) == len(wavelengths))
 
         _ = plot_spectrum()
