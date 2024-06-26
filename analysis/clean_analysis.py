@@ -7,11 +7,11 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
 from scipy.optimize import least_squares
+from sklearn.linear_model import LinearRegression
 import spectral.io.envi as envi
 from spectral import imshow, view_cube
-import tqdm
+from tqdm import tqdm
 
 ### Constants ###
 h = 6.626e-34 # Planck's constant
@@ -24,6 +24,7 @@ image = None
 units = None
 wavelengths = None
 pixel = None
+row = None
 spectrum = None
 
 ### Helper Functions ###
@@ -99,7 +100,8 @@ def get_bands(paths, quiet=False):
     return None
 
 def display_image(quiet=False):
-    """Displays the hyperspectral image using spectralPy"""
+    """Displays the hyperspectral image using spectralPy
+    Input: None (uses global variables), Output: None"""
     print("Displaying image...")
     if not quiet:
         plt.figure()
@@ -126,15 +128,17 @@ def plot_spectrum(quiet=False):
 
     return None
 
-def fit_spectrum(quiet=False):
+def fit_spectrum(quiet=False, check_units=True):
     """Fits the selected spectrum
     Input: None (uses global variables)
     Output: Fitted parameters, final least squares cost"""
-    print("\nIf this test fails, check lower in this function to adjust wavelenght unit conversion to m")
-    print("Checking that units are nm... ", end="")
-    assert(units == "nm")
-    print("Passed")
-    print("Fitting spectrum...")
+    if check_units:
+        print("\nIf this test fails, check lower in this function to adjust wavelenght unit conversion to m")
+        print("Checking that units are nm... ", end="")
+        assert(units == "nm")
+        print("Passed")
+    if not quiet:
+        print("Fitting spectrum...")
 
     # params = [a0, a1, a2, offset, T]
     params0 = np.array([1, 1, 1, 0.1, 1000])
@@ -170,33 +174,102 @@ def fit_spectrum(quiet=False):
 
     return result.x, result.cost
 
+def fit_row(quiet=False):
+    """Fits the entire selected row
+    Input: None (uses global variables)
+    Output: List of temperatures and fitting final costs"""
+    print("Fitting row...")
+    global spectrum
+    temps, costs = [], []
+    for frame_index in tqdm(range(len(row))):
+        spectrum = row[frame_index]
+        params, cost = fit_spectrum(quiet=quiet, check_units=False)
+        temps.append(params[-1]), costs.append(cost)
+
+    return temps, costs
+
+def plot_row_results(Ts, costs, quiet=False):
+    """Plots results from fitting all pixels in a row
+    Input: list of temperatures, list of fitting costs
+    Output: None"""
+    print("Plotting row results...")
+    if not quiet:
+        x = np.array(range(len(Ts)))
+        fig, ax = plt.subplots(nrows = 2, ncols = 1)
+        fig.set_figwidth(6)
+        fig.set_figheight(7)
+        ax[0].set_title("Fitting Results for Entire Row", fontsize=15)
+
+        ax[0].scatter(x, Ts, s=3)
+        ax[0].set_ylabel("Temperature [K]", fontsize=12)
+        model = LinearRegression()
+        model.fit(x.reshape(-1,1), Ts)
+        ax[0].plot(x, model.predict(x.reshape(-1, 1)), color="red", linewidth=4)
+
+        ax[1].scatter(range(len(costs)), costs, s=3)
+        ax[1].set_ylabel("Final Cost", fontsize=12)
+
+        ax[1].set_xlabel("Frame", fontsize=12)
+
+        plt.show()
+
+    return None
+
 ### Main ###
 
 def main():
     global image
     global pixel
+    global row
     global spectrum
-    folder_path = input("Enter the file path to your hyperspectral data folder: ")
-    paths = construct_paths(folder_path)
-    image = load_data(paths, quiet=True)
-    _ = get_bands(paths, quiet=True)
-
-    _ = display_image()
 
     while True:
-        pixel = input("\nEnter the pixel you want to analyze 'frame,position' or 'exit' to end program: ")
-        if pixel == "exit": return
+        try:
+            folder_path = input("Enter the file path to your hyperspectral data folder or exit ('exit'): ")
+            if folder_path == 'exit': return
+            paths = construct_paths(folder_path)
+            image = load_data(paths, quiet=True)
+            _ = get_bands(paths, quiet=True)
+        except: 
+            print("Invalid argument")
+            continue
 
-        pixel = np.array(pixel.split(","), dtype=np.int64)
-        x, y = pixel[0], pixel[1]
-        spectrum = image[x][y]
-        assert(len(spectrum) == len(wavelengths))
+        _ = display_image()
 
-        _ = plot_spectrum()
-        result, cost = fit_spectrum()
-        print(f"\nTemperature = {result[4]} K\n")
-        print(f"Emissivity = ({result[0]}) + ({result[1]} * wavelength) + ({result[2]} * wavelength^2)")
-        print(f"Stray Light Offset = {result[3]}")
-        print(f"Final Cost = {cost}")
+        while True:
+            option = input("\nDo you want to analyze a single pixel ('1') or entire row ('2') or return to folder selection ('exit')? ")
+            if option == '1': analyze_row = False
+            elif option == '2': analyze_row = True
+            elif option == 'exit': break
+            else: continue
+
+            if analyze_row:
+                try:
+                    row = int(input("\nEnter the row: "))
+                    row = image[:,row,:]
+                except: 
+                    print("Invalid argument")
+                    continue
+                
+                temps, costs = fit_row(quiet=True)
+                _ = plot_row_results(temps, costs)
+
+            else:
+                pixel = input("\nEnter the pixel ('frame,position'): ")
+                try:
+                    pixel = np.array(pixel.split(","), dtype=np.int64)
+                    x, y = pixel[0], pixel[1]
+                    spectrum = image[x][y]
+                    # assert(len(spectrum) == len(wavelengths))
+                except: 
+                    print("Invalid argument")
+                    continue
+
+                _ = plot_spectrum()
+                result, cost = fit_spectrum()
+                print(f"\nTemperature = {result[4]} K\n")
+                print(f"Emissivity = ({result[0]}) + ({result[1]} * wavelength) + ({result[2]} * wavelength^2)")
+                print(f"Stray Light Offset = {result[3]}")
+                print(f"Final Cost = {cost}")
     
 if __name__ == "__main__": main()
