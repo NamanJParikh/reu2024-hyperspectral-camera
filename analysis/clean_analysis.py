@@ -104,7 +104,6 @@ def display_image(quiet=False):
     Input: None (uses global variables), Output: None"""
     print("Displaying image...")
     if not quiet:
-        plt.figure()
         imshow(image, (100,100,100))
         plt.xticks([])
         plt.yticks([])
