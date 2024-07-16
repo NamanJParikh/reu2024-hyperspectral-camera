@@ -1,0 +1,4 @@
+Under preferences add board manager url: https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+Install philhower rp2040 boards
+Install library: https://github.com/tommag/TMC5160_Arduino (install as zip after removing _ and - from name)
+Install ArXTypeTraits (dependency of above)

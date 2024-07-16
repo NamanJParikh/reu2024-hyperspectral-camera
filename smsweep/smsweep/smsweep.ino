@@ -10,7 +10,7 @@ void setup()
 {
   // USB/debug serial coms
   Serial.begin(9600);
-  Serial.ignoreFlowControl();
+  Serial.ignoreFlowControl(true);
 
   SPI.begin();
   pinMode(SPI_DRV_ENN, OUTPUT); 
