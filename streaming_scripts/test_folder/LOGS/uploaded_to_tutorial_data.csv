@@ -4,3 +4,4 @@ filename;rel_filepath;n_chunks;started;completed
 'final_test.txt';'final_test.txt';1;'Thu Jul 18, 2024 at 15:37:51';'Thu Jul 18, 2024 at 15:37:51'
 'test01.txt';'test01.txt';1;'Thu Jul 18, 2024 at 16:43:43';'Thu Jul 18, 2024 at 16:43:43'
 'test01.txt';'test01.txt';1;'Thu Jul 18, 2024 at 16:41:56';'Thu Jul 18, 2024 at 16:41:56'
+'test02.txt';'test02.txt';1;'Thu Jul 18, 2024 at 17:00:31';'Thu Jul 18, 2024 at 17:00:31'

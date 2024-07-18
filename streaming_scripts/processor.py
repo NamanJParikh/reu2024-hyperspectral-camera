@@ -43,10 +43,10 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
             timestamp = datetime.datetime.now()
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.npy"
+            output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.txt"
             with lock:
                 arr = np.array([[1, 2, 3], [4, 5, 6]])
-                np.save(output_filepath, arr)
+                np.savetxt(output_filepath, arr, encoding="utf8")
                 upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
                 upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
         except Exception as exc:

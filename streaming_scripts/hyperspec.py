@@ -62,18 +62,18 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
             timestamp = datetime.datetime.now()
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_decoded.txt"
+            output_filepath = self._output_dir / f"{rel_fp_str}_remade.txt"
 
-            # # get the raw data from the file's bytestring
-            # data_lines = [
-            #     line.decode().strip()
-            #     for line in (BytesIO(datafile.bytestring)).readlines()
-            # ]
+            # get the raw data from the file's bytestring
+            data_lines = [
+                line.decode("latin-1").strip()
+                for line in (BytesIO(datafile.bytestring)).readlines()
+            ]
 
             with lock:
-                with open(output_filepath, "wb") as filep:
-                    filep.write(datafile.bytestring)
-
+                with open(output_filepath, "w") as filep:
+                    for line in data_lines: filep.write(line)
+                
         except Exception as exc:
             return exc
         return None
