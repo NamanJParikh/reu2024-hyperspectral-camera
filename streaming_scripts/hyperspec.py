@@ -59,20 +59,17 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
     def _process_downloaded_data_file(self, datafile, lock):
         "Writes out a file with a timestamp for each reconstructed file"
         try:
-            timestamp = datetime.datetime.now()
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_remade.txt"
-
-            # get the raw data from the file's bytestring
-            data_lines = [
-                line.decode("latin-1").strip()
-                for line in (BytesIO(datafile.bytestring)).readlines()
-            ]
+            output_filepath = self._output_dir / f"{rel_fp_str}_remade.npy"
 
             with lock:
-                with open(output_filepath, "w") as filep:
-                    for line in data_lines: filep.write(line)
+                with open(output_filepath, "wb") as filep:
+                    filep.write(BytesIO(datafile.bytestring).read())
+
+            temp_arr = np.load(output_filepath, allow_pickle=True)
+            # output_filepath = self._output_dir / f"{rel_fp_str}_remade.txt"
+            # np.savetxt(output_filepath, temp_arr)
                 
         except Exception as exc:
             return exc

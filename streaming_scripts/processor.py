@@ -40,13 +40,12 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
     def _process_downloaded_data_file(self, datafile, lock):
         "Writes out a file with a timestamp for each reconstructed file"
         try:
-            timestamp = datetime.datetime.now()
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.txt"
+            output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.npy"
             with lock:
                 arr = np.array([[1, 2, 3], [4, 5, 6]])
-                np.savetxt(output_filepath, arr, encoding="utf8")
+                np.save(output_filepath, arr, allow_pickle=True)
                 upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
                 upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
         except Exception as exc:

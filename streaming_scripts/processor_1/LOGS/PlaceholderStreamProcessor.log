@@ -1,0 +1,7 @@
+[PlaceholderStreamProcessor 2024-07-18 18:06:14] WARNING: failed to synchronously commit offset of last message received. Duplicate messages may be read the next time this Consumer is started. Error will be logged below but not re-raised.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 125, in __commit_last_message_offset
+    tps = consumer.commit(self.last_message, asynchronous=False)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/openmsistream_consumer.py", line 314, in commit
+    return self._consumer.commit(message=message, asynchronous=asynchronous)
+cimpl.KafkaException: KafkaError{code=REBALANCE_IN_PROGRESS,val=27,str="Commit failed: Broker: Group rebalance in progress"}
