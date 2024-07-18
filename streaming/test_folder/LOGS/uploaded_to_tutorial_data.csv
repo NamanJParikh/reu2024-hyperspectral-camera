@@ -1,2 +1,6 @@
 filename;rel_filepath;n_chunks;started;completed
 'test_watchdog.txt';'test_watchdog.txt';1;'Thu Jul 18, 2024 at 00:17:50';'Thu Jul 18, 2024 at 00:17:50'
+'test_1.txt';'test_watchdog_folder/test_1.txt';1;'Thu Jul 18, 2024 at 00:25:57';'Thu Jul 18, 2024 at 00:25:57'
+'test_2-checkpoint.txt';'test_watchdog_folder/.ipynb_checkpoints/test_2-checkpoint.txt';1;'Thu Jul 18, 2024 at 00:25:57';'Thu Jul 18, 2024 at 00:25:57'
+'test_2.txt';'test_watchdog_folder/test_2.txt';1;'Thu Jul 18, 2024 at 00:25:57';'Thu Jul 18, 2024 at 00:25:57'
+'test_1-checkpoint.txt';'test_watchdog_folder/.ipynb_checkpoints/test_1-checkpoint.txt';1;'Thu Jul 18, 2024 at 00:25:57';'Thu Jul 18, 2024 at 00:25:57'
