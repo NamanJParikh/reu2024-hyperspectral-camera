@@ -191,7 +191,7 @@ download_thread = Thread(
 )
 
 # Create the StreamProcessor
-psp = PlaceholderStreamProcessor(
+psp = ResultPlottingStreamProcessor(
     CONFIG_FILE_PATH,
     CONSUMER_TOPIC_NAME,
     output_dir=STREAM_PROCESSOR_OUTPUT_DIR,
