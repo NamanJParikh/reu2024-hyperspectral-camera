@@ -21,22 +21,27 @@ from openmsistream import (
 TOPIC_NAME = "tutorial_data"
 
 # The name of the topic to consume files from
-CONSUMER_TOPIC_NAME = "tutorial_meta_data"
+CONSUMER_TOPIC_NAME = "tutorial_metadata"
 
 # Path to the root directory of this repo
-# repo_root_dir = pathlib.Path().resolve().parent
-root_dir = pathlib.Path("C:")
+repo_root_dir = pathlib.Path().resolve().parent
+# root_dir = pathlib.Path("C:")
 
 # Paths to the config file and the directory holding the test files
-CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
-DATA_DIR = root_dir / "Headwall" / "sensor1" / "captured"
+CONFIG_FILE_PATH = repo_root_dir / "config_files" / "confluent_cloud_broker.config"
+DATA_DIR = repo_root_dir  / "final_scripts" / "test_camera_capture"
+# CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
+# DATA_DIR = root_dir / "Headwall" / "sensor1" / "captured"
 
 # Paths to the config file and the directory holding the test files
-RESULT_CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker_for_metadata_consumer.config"
-RESULT_FILE_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_arrays"
+RESULT_CONFIG_FILE_PATH = repo_root_dir / "config_files" / "confluent_cloud_broker_for_metadata_consumer.config"
+RESULT_FILE_DIR = repo_root_dir / "final_scripts" / "test_result_consume"
+# RESULT_CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker_for_metadata_consumer.config"
+# RESULT_FILE_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_arrays"
 
 # Path to the directory to store the StreamProcessor output
-STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_heatmaps"
+STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "final_scripts" / "test_heatmap"
+# STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_heatmaps"
 
 
 

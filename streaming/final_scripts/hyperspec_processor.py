@@ -16,6 +16,18 @@ from openmsistream.data_file_io import ReproducerMessage, DataFile
 
 #################### Tasks ####################
 
+class TemperatureGradientMessage(ReproducerMessage):
+    def __init__(self, *args, npy_array=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.npy_array = npy_array
+    
+    def msg_value(self):
+        if self.npy_array is None:
+            raise ValueError(
+                f"ERROR: Array content should not be None for a {self.__class__.__name__}!"
+            )
+        return self.npy_array
+
 class HyperspectralImageProcessor(DataFileStreamReproducer):
     """Analyzes hyperpectral image and returns a file of the temperature array
     """
@@ -82,11 +94,11 @@ repo_root_dir = pathlib.Path().resolve().parent
 
 # Path to the config file to use for the Reproducer
 REPRODUCER_CONFIG_FILE_PATH = (
-    repo_root_dir / "streaming" / "config_files" / "confluent_cloud_broker_for_reproducer.config"
+    repo_root_dir / "config_files" / "confluent_cloud_broker_for_reproducer.config"
 )
 
 # Path to the directory to store the Reproducer registry files
-REPRODUCER_OUTPUT_DIR = repo_root_dir / "streaming" / "Reproducer_output"
+REPRODUCER_OUTPUT_DIR = repo_root_dir / "final_scripts" / "Reproducer_output"
 
 # Name of the topic to produce the metadata messages to
 PRODUCER_TOPIC_NAME = "tutorial_metadata"
