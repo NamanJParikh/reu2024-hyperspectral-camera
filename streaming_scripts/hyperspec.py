@@ -1,6 +1,6 @@
 ########## Imports ##########
 
-import numpy as np
+import numpy as np, matplotlib, matplotlib.pyplot as plt
 from io import BytesIO
 import pathlib, importlib, logging, datetime, json, platform
 from threading import Thread
@@ -16,6 +16,8 @@ from openmsistream import (
 
 
 ########## Setup ##########
+
+matplotlib.use("Agg")
 
 # The name of the topic to work with
 TOPIC_NAME = "tutorial_data"
@@ -68,6 +70,11 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
                     filep.write(BytesIO(datafile.bytestring).read())
 
             temp_arr = np.load(output_filepath, allow_pickle=True)
+            plt.figure()
+            plt.imshow(temp_arr, cmap="hot")
+            plt.colorbar()
+            output_filepath = self._output_dir / f"{rel_fp_str}_remade.png"
+            plt.savefig(output_filepath)
             # output_filepath = self._output_dir / f"{rel_fp_str}_remade.txt"
             # np.savetxt(output_filepath, temp_arr)
                 
