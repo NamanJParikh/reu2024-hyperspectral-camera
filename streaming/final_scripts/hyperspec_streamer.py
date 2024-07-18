@@ -99,31 +99,18 @@ class ResultPlottingStreamProcessor(DataFileStreamProcessor):
     """
 
     def _process_downloaded_data_file(self, datafile, lock):
-        rel_filepath = datafile.relative_filepath
-        rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-        output_filepath = self._output_dir / f"{rel_fp_str}_heatmap.png"
-
-        with lock:
-            temp_arr = np.load(rel_fp_str)
-            plt.figure()
-            plt.imshow(temp_arr, cmap='hot')
-            plt.savefig(output_filepath)
-
-    # def _process_downloaded_data_file(self, datafile, lock):
-    #     "Writes out a file with a timestamp for each reconstructed file"
-    #     try:
-    #         timestamp = datetime.datetime.now()
-    #         rel_filepath = datafile.relative_filepath
-    #         rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-    #         output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.txt"
-    #         with lock:
-    #             with open(output_filepath, "w") as filep:
-    #                 filep.write(
-    #                     f"Processing timestamp: {timestamp.strftime('%m/%d/%Y, %H:%M:%S')}"
-    #                 )
-    #     except Exception as exc:
-    #         return exc
-    #     return None
+        try:
+            rel_filepath = datafile.relative_filepath
+            rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
+            output_filepath = self._output_dir / f"{rel_fp_str}_heatmap.png"
+            with lock:
+                temp_arr = np.load(rel_fp_str)
+                plt.figure()
+                plt.imshow(temp_arr, cmap='hot')
+                plt.savefig(output_filepath)
+        except Exception as exc:
+            return exc
+        return None
     
     @classmethod
     def run_from_command_line(cls, args=None):
