@@ -1,122 +1,144 @@
 #################### Imports ####################
 
-import numpy as np
-import pathlib, importlib, logging, datetime, json, platform
+import os
+import numpy as np, matplotlib.pyplot as plt
+import pathlib, logging, importlib, datetime, json, platform
 from threading import Thread
 from openmsitoolbox.logging import OpenMSILogger
 from openmsistream import (
+    UploadDataFile, 
+    DataFileUploadDirectory,
     DataFileDownloadDirectory,
     DataFileStreamProcessor,
     MetadataJSONReproducer,
-    DataFileStreamReproducer,
 )
-from openmsistream.data_file_io import ReproducerMessage, DataFile
+
+
+
+#################### Config ####################
+
+# Path to the root directory of this repo
+repo_root_dir = pathlib.Path().resolve().parent
+
+# The name of the topic to consume files from
+CONSUMER_TOPIC_NAME = "tutorial_data"
+
+# The name of the topic to produce to
+TOPIC_NAME = "tutorial_metadata"
+
+# Paths to the config file and the directory holding the test files
+CONFIG_FILE_PATH = repo_root_dir / "config_files" / "confluent_cloud_broker.config"
+
+# Paths to the config file and the directory holding the test files
+RESULT_CONFIG_FILE_PATH = repo_root_dir / "config_files" / "confluent_cloud_broker_for_metadata_consumer.config"
+
+# Path to the directory to store the StreamProcessor output
+STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "final_scripts" / "test_process_result"
 
 
 
 #################### Tasks ####################
 
-class TemperatureGradientMessage(ReproducerMessage):
-    def __init__(self, *args, npy_array=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.npy_array = npy_array
-    
-    def msg_value(self):
-        if self.npy_array is None:
-            raise ValueError(
-                f"ERROR: Array content should not be None for a {self.__class__.__name__}!"
-            )
-        return self.npy_array
-
-class HyperspectralImageProcessor(DataFileStreamReproducer):
-    """Analyzes hyperpectral image and returns a file of the temperature array
+class TemperatureAnalysisStreamProcessor(DataFileStreamProcessor):
+    """Plots and saves the heatmap for every temperature array reconstructed
+    from processor stream
     """
 
-    def _get_processing_result_message_for_file(self, datafile, lock):
+    def _process_downloaded_data_file(self, datafile, lock):
         try:
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
             output_filepath = self._output_dir / f"{rel_fp_str}_result.npy"
             with lock:
-                np.save(output_filepath, np.zeros((3,3), dtype=np.int64))
-        except:
-            return None
-        return ReproducerMessage(DataFile(output_filepath))
+                temp_arr = np.zeros((3,3))
+                np.save(output_filepath, temp_arr)
+                # upload_file = UploadDataFile(output_filepath, rootdir=STREAM_PROCESSOR_OUTPUT_DIR)
+                # upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
+        except Exception as exc:
+            return exc
+        return None
     
     @classmethod
     def run_from_command_line(cls, args=None):
         "Not used"
         pass
 
-def reproducer_task(reproducer):
-    """Run "produce_processing_results_for_files_as_read" for a given
-    DataFileStreamReproducer, and log some messages when it gets shut down
+def stream_processor_task(stream_processor):
+    """Run "process_files_as_read" for the given stream processor, and log a message
+    when it gets shuts down
+    
+    Args:
+        stream_processor (openmsistream.DataFileStreamProcessor): The stream processor to run
+    """
+    # This call to "process_files_as_read" hangs until the stream processor is shut down
+    (
+        n_m_r, # The number of messages read
+        n_m_p, # The number of messages processed
+        n_f_p, # The number of files successfully processed
+        p_fps, # Paths to the most recently-processed files
+    ) = stream_processor.process_files_as_read()
+    stream_processor.close()
+    msg = f"{n_m_r} total messages were consumed"
+    if n_f_p > 0:
+        msg += (
+            f", {n_m_p} messages were processed,"
+            f" and {n_f_p} files were successfully processed"
+        )
+    else:
+        msg += f" and {n_m_p} messages were successfully processed"
+    msg += (
+        f". Up to {stream_processor.N_RECENT_FILES} most recently "
+        "processed files:\n\t"
+    )
+    msg += "\n\t".join([str(fp) for fp in p_fps])
+    stream_processor.logger.info(msg)
+
+def upload_task(upload_directory, *args, **kwargs):
+    """Run "upload_files_as_added" for a given DataFileUploadDirectory, and log a message
+    when it gets shut down
 
     Args:
-        reproducer (DataFileStreamReproducer): the DataFileStreamReproducer to run
+        upload_directory (DataFileUploadDirectory): the DataFileUploadDirectory to run
+        args (list): passed through to "upload_files_as_added"
+        kwargs (dict): passed through to "upload_files_as_added"
     """
-    # This call to "produce_processing_results_for_files_as_read" hangs until the program
-    # is shut down
-    (
-        n_m_r, # number of messages read
-        n_m_p, # number of messages processed
-        n_f_r, # number of files read
-        n_f_mp, # number of files that had metadata produced
-        m_p_fps, # paths to files that had metadata produced (up to 50)
-    ) = reproducer.produce_processing_results_for_files_as_read()
-    reproducer.close()
-    # Create a log a message stating the files that were processed during the run
-    msg = ""
-    if n_m_r > 0:
-        msg += f'{n_m_r} total message{"s were" if n_m_r!=1 else " was"} consumed, '
-    if n_m_p > 0:
-        msg += f'{n_m_p} message{"s were" if n_m_p!=1 else " was"} successfully processed, '
-    if n_f_r > 0:
-        msg += f'{n_f_r} file{"s were" if n_f_r!=1 else " was"} fully read, '
-    if n_f_mp > 0:
-        msg += (
-            f'{n_f_mp} file{"s" if n_f_mp!=1 else ""} had json metadata produced '
-            f'to the "{reproducer.producer_topic_name}" topic. '
-            f"Up to {reproducer.N_RECENT_FILES} most recent:\n\t"
-        )
-    msg += "\n\t".join([str(fp) for fp in m_p_fps])
-    reproducer.logger.info(msg)
+    # This call to "upload_files_as_added" waits until the program is shut down
+    uploaded_filepaths = upload_directory.upload_files_as_added(*args, **kwargs)
+    msg = (
+        f"The following files were uploaded:\n\t"
+    )
+    msg += "\n\t".join([str(fp) for fp in uploaded_filepaths])
+    upload_directory.logger.info(msg)
 
 
 
-#################### Config ####################
+#################### Run Processor ####################
 
-# The name of the topic to consume files from
-CONSUMER_TOPIC_NAME = "tutorial_data"
-
-# Path to the root directory of this repo
-repo_root_dir = pathlib.Path().resolve().parent
-
-# Path to the config file to use for the Reproducer
-REPRODUCER_CONFIG_FILE_PATH = (
-    repo_root_dir / "config_files" / "confluent_cloud_broker_for_reproducer.config"
-)
-
-# Path to the directory to store the Reproducer registry files
-REPRODUCER_OUTPUT_DIR = repo_root_dir / "final_scripts" / "Reproducer_output"
-
-# Name of the topic to produce the metadata messages to
-PRODUCER_TOPIC_NAME = "tutorial_metadata"
-
-
-
-#################### Run Reproducer ####################
-
-# Create the ImageProcessor
-hip = HyperspectralImageProcessor(
-    REPRODUCER_CONFIG_FILE_PATH,
+# Create the StreamProcessor
+psp = TemperatureAnalysisStreamProcessor(
+    CONFIG_FILE_PATH,
     CONSUMER_TOPIC_NAME,
-    PRODUCER_TOPIC_NAME,
-    output_dir=REPRODUCER_OUTPUT_DIR,
+    output_dir=STREAM_PROCESSOR_OUTPUT_DIR,
 )
-# Start running its "produce_processing_results_for_files_as_read" function in a separate thread
-reproducer_thread = Thread(
-    target=reproducer_task,
-    args=(hip,),
+# Start running its "process_files_as_read" function in a separate thread
+processor_thread = Thread(
+    target=stream_processor_task,
+    args=(psp,),
 )
-reproducer_thread.start()
+
+# Create the DataFileUploadDirectory
+dfud = DataFileUploadDirectory(
+    STREAM_PROCESSOR_OUTPUT_DIR, 
+    RESULT_CONFIG_FILE_PATH,
+)
+# Create separate thread for "upload_files_as_added" function
+upload_thread = Thread(
+    target=upload_task,
+    args=(
+        dfud,
+        TOPIC_NAME,
+    ),
+)
+
+processor_thread.start()
+upload_thread.start()

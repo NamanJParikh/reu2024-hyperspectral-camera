@@ -35,7 +35,6 @@ DATA_DIR = repo_root_dir  / "final_scripts" / "test_camera_capture"
 
 # Paths to the config file and the directory holding the test files
 RESULT_CONFIG_FILE_PATH = repo_root_dir / "config_files" / "confluent_cloud_broker_for_metadata_consumer.config"
-RESULT_FILE_DIR = repo_root_dir / "final_scripts" / "test_result_consume"
 # RESULT_CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker_for_metadata_consumer.config"
 # RESULT_FILE_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_arrays"
 
@@ -64,36 +63,6 @@ def upload_task(upload_directory, *args, **kwargs):
     msg += "\n\t".join([str(fp) for fp in uploaded_filepaths])
     upload_directory.logger.info(msg)
 
-def download_task(download_directory):
-    """Run "reconstruct" for a given DataFileDownloadDirectory, and log some messages
-    when it gets shut down
-
-    Args:
-        download_directory (DataFileDownloadDirectory): the DataFileDownloadDirectory to run
-    """
-    # This call to "reconstruct" waits until the program is shut down
-    (
-        n_read,
-        n_processed,
-        n_complete_files,
-        complete_filepaths,
-    ) = download_directory.reconstruct()
-    download_directory.close()
-    msg = f"{n_read} total messages were consumed"
-    if len(complete_filepaths) > 0:
-        msg += (
-            f", {n_processed} messages were successfully processed, and "
-            f'{n_complete_files} file{" was" if n_complete_files==1 else "s were"} '
-            "successfully reconstructed"
-        )
-    else:
-        msg += f" and {n_processed} messages were successfully processed"
-    msg += (
-        f". Most recent completed files (up to {download_directory.N_RECENT_FILES}):\n\t"
-    )
-    msg += "\n\t".join([str(filepath) for filepath in complete_filepaths])
-    download_directory.logger.info(msg)
-
 class ResultPlottingStreamProcessor(DataFileStreamProcessor):
     """Plots and saves the heatmap for every temperature array reconstructed
     from processor stream
@@ -103,12 +72,13 @@ class ResultPlottingStreamProcessor(DataFileStreamProcessor):
         try:
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_heatmap.png"
+            output_filepath = self._output_dir / f"{rel_fp_str}.npy"
             with lock:
                 temp_arr = np.load(rel_fp_str)
-                plt.figure()
-                plt.imshow(temp_arr, cmap='hot')
-                plt.savefig(output_filepath)
+                np.save(output_filepath, temp_arr)
+                # plt.figure()
+                # plt.imshow(temp_arr, cmap='hot')
+                # plt.savefig(output_filepath)
         except Exception as exc:
             return exc
         return None
@@ -166,17 +136,6 @@ upload_thread = Thread(
     ),
 )
 
-# Create the DataFileDownloadDirectory
-dfdd = DataFileDownloadDirectory(
-    RESULT_FILE_DIR,
-    RESULT_CONFIG_FILE_PATH,
-    CONSUMER_TOPIC_NAME,
-)
-# Create separate thread for "reconstruct" function
-download_thread = Thread(
-    target=download_task,
-    args=(dfdd,),
-)
 
 # Create the StreamProcessor
 psp = ResultPlottingStreamProcessor(
@@ -192,5 +151,4 @@ processor_thread = Thread(
 
 # Start running the threads
 upload_thread.start()
-download_thread.start()
 processor_thread.start()
