@@ -19,25 +19,19 @@ from openmsistream import (
 
 # The name of the topic to produce to
 TOPIC_NAME = "tutorial_data"
-# TOPIC_NAME = "hyperspectral_LDFZ"
 
 # The name of the topic to consume files from
 CONSUMER_TOPIC_NAME = "tutorial_meta_data"
-# CONSUMER_TOPIC_NAME = "hyperspectral_LDFZ_results"
 
 # Path to the root directory of this repo
 # repo_root_dir = pathlib.Path().resolve().parent
 root_dir = pathlib.Path("C:")
 
 # Paths to the config file and the directory holding the test files
-# CONFIG_FILE_PATH = repo_root_dir / "streaming" / "config_files" / "confluent_cloud_broker.config"
-# TEST_FILE_DIR = repo_root_dir / "streaming" / "test_folder"
 CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
 DATA_DIR = root_dir / "Headwall" / "sensor1" / "captured"
 
 # Paths to the config file and the directory holding the test files
-# CONFIG_FILE_PATH = repo_root_dir / "streaming" / "config_files" / "confluent_cloud_broker.config"
-# TEST_RECO_DIR = repo_root_dir / "streaming" / "reconstructed_test_folder"
 RESULT_CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker_for_metadata_consumer.config"
 RESULT_FILE_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_arrays"
 
@@ -96,8 +90,8 @@ def download_task(download_directory):
     download_directory.logger.info(msg)
 
 class ResultPlottingStreamProcessor(DataFileStreamProcessor):
-    """Performs a placeholder task (writing out a file to the local system) for every
-    data file reconstructed from a topic
+    """Plots and saves the heatmap for every temperature array reconstructed
+    from processor stream
     """
 
     def _process_downloaded_data_file(self, datafile, lock):
@@ -151,7 +145,7 @@ def stream_processor_task(stream_processor):
 
 
 
-#################### Run Producer and Consumer ####################
+#################### Run Producer, Consumer, and Processor ####################
 
 # Create the DataFileUploadDirectory
 dfud = DataFileUploadDirectory(
@@ -195,8 +189,3 @@ processor_thread = Thread(
 upload_thread.start()
 download_thread.start()
 processor_thread.start()
-
-# Join threads
-# upload_thread.join()
-# download_thread.join()
-# processor_thread.join()
