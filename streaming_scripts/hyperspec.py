@@ -1,6 +1,7 @@
 ########## Imports ##########
 
 import numpy as np
+from io import BytesIO
 import pathlib, importlib, logging, datetime, json, platform
 from threading import Thread
 from openmsitoolbox.logging import OpenMSILogger
@@ -61,12 +62,18 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
             timestamp = datetime.datetime.now()
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.txt"
+            output_filepath = self._output_dir / f"{rel_fp_str}_decoded.txt"
+
+            # # get the raw data from the file's bytestring
+            # data_lines = [
+            #     line.decode().strip()
+            #     for line in (BytesIO(datafile.bytestring)).readlines()
+            # ]
+
             with lock:
-                with open(output_filepath, "w") as filep:
-                    filep.write(
-                        f"Processing timestamp: {timestamp.strftime('%m/%d/%Y, %H:%M:%S')}"
-                    )
+                with open(output_filepath, "wb") as filep:
+                    filep.write(datafile.bytestring)
+
         except Exception as exc:
             return exc
         return None

@@ -45,7 +45,7 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
             output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.npy"
             with lock:
-                arr = np.zeros((3,3))
+                arr = np.array([[1, 2, 3], [4, 5, 6]])
                 np.save(output_filepath, arr)
                 upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
                 upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
