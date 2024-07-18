@@ -22,25 +22,27 @@ TOPIC_NAME = "tutorial_data"
 # TOPIC_NAME = "hyperspectral_LDFZ"
 
 # The name of the topic to consume files from
-CONSUMER_TOPIC_NAME = "tutorial_data"
+CONSUMER_TOPIC_NAME = "tutorial_meta_data"
 # CONSUMER_TOPIC_NAME = "hyperspectral_LDFZ_results"
 
 # Path to the root directory of this repo
-repo_root_dir = pathlib.Path().resolve().parent
+# repo_root_dir = pathlib.Path().resolve().parent
+root_dir = pathlib.Path("C:")
 
 # Paths to the config file and the directory holding the test files
 # CONFIG_FILE_PATH = repo_root_dir / "streaming" / "config_files" / "confluent_cloud_broker.config"
 # TEST_FILE_DIR = repo_root_dir / "streaming" / "test_folder"
-CONFIG_FILE_PATH = ""
-DATA_DIR = ""
+CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
+DATA_DIR = root_dir / "Headwall" / "sensor1" / "captured"
 
 # Paths to the config file and the directory holding the test files
 # CONFIG_FILE_PATH = repo_root_dir / "streaming" / "config_files" / "confluent_cloud_broker.config"
 # TEST_RECO_DIR = repo_root_dir / "streaming" / "reconstructed_test_folder"
-RESULT_FILE_DIR = ""
+RESULT_CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker_for_metadata_consumer.config"
+RESULT_FILE_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_arrays"
 
 # Path to the directory to store the StreamProcessor output
-STREAM_PROCESSOR_OUTPUT_DIR = ""
+STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "Headwall" / "sensor1" / "temp_results_heatmaps"
 
 
 
@@ -168,7 +170,7 @@ upload_thread = Thread(
 # Create the DataFileDownloadDirectory
 dfdd = DataFileDownloadDirectory(
     RESULT_FILE_DIR,
-    CONFIG_FILE_PATH,
+    RESULT_CONFIG_FILE_PATH,
     CONSUMER_TOPIC_NAME,
 )
 # Create separate thread for "reconstruct" function
@@ -179,7 +181,7 @@ download_thread = Thread(
 
 # Create the StreamProcessor
 psp = ResultPlottingStreamProcessor(
-    CONFIG_FILE_PATH,
+    RESULT_CONFIG_FILE_PATH,
     CONSUMER_TOPIC_NAME,
     output_dir=STREAM_PROCESSOR_OUTPUT_DIR,
 )
