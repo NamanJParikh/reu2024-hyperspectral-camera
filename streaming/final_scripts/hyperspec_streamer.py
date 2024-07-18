@@ -125,10 +125,10 @@ class ResultPlottingStreamProcessor(DataFileStreamProcessor):
     #         return exc
     #     return None
     
-    # @classmethod
-    # def run_from_command_line(cls, args=None):
-    #     "Not used in this example... stay tuned for the live coding tomorrow!"
-    #     pass
+    @classmethod
+    def run_from_command_line(cls, args=None):
+        "Not used"
+        pass
 
 def stream_processor_task(stream_processor):
     """Run "process_files_as_read" for the given stream processor, and log a message
