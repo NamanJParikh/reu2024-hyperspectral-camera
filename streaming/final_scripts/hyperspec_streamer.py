@@ -207,9 +207,7 @@ upload_thread.start()
 download_thread.start()
 processor_thread.start()
 
-# TODO - wait for termination
-
 # Join threads
-upload_thread.join()
-download_thread.join()
-processor_thread.join()
+# upload_thread.join()
+# download_thread.join()
+# processor_thread.join()
