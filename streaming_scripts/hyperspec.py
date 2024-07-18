@@ -75,8 +75,6 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
             plt.colorbar()
             output_filepath = self._output_dir / f"{rel_fp_str}_remade.png"
             plt.savefig(output_filepath)
-            # output_filepath = self._output_dir / f"{rel_fp_str}_remade.txt"
-            # np.savetxt(output_filepath, temp_arr)
                 
         except Exception as exc:
             return exc
