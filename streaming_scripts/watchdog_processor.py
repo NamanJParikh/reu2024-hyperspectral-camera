@@ -107,17 +107,17 @@ class Handler(FileSystemEventHandler):
         else: return
 
         if not (
-            "WhiteReference" in files
-            and "WhiteReference.hdr" in files
-            and "DarkReference" in files
-            and "DarkReference.hdr" in files
-            and "raw" in files
+            "whiteReference.raw" in files
+            and "whiteReference.hdr" in files
+            and "darkReference.raw" in files
+            and "darkReference.hdr" in files
+            and "raw.raw" in files
             and "raw.hdr" in files
-            and "frameIndex.txt" in files
+            # and "frameIndex.txt" in files
         ): return
         
         temp_arr = analysis(event.src_path)
-        foldername = rootdir[rootdir.rfind("/"):]
+        foldername = rootdir[rootdir.rfind("/")+1:]
         print(foldername)
         output_filepath = ANALYSIS_DIR / (foldername + ".npy")
         np.save(output_filepath, temp_arr, allow_pickle=True)
