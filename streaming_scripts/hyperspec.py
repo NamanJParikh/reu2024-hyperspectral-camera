@@ -129,7 +129,7 @@ upload_thread = Thread(
         TOPIC_NAME,
     ),
 )
-upload_thread.start()
+
 
 # Create the StreamProcessor
 psp = PlaceholderStreamProcessor(
@@ -142,4 +142,7 @@ processor_thread = Thread(
     target=stream_processor_task,
     args=(psp,),
 )
-processor_thread.start()
+
+if __name__ == "__main__":
+    upload_thread.start()
+    processor_thread.start()

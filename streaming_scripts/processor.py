@@ -102,4 +102,5 @@ processor_thread = Thread(
     target=stream_processor_task,
     args=(psp,),
 )
-processor_thread.start()
+
+if __name__ == "__main__": processor_thread.start()
