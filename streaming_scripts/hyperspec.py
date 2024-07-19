@@ -145,4 +145,4 @@ processor_thread = Thread(
 
 if __name__ == "__main__":
     upload_thread.start()
-    processor_thread.start()
+    # processor_thread.start()

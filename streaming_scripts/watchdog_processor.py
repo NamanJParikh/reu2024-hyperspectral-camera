@@ -95,14 +95,18 @@ class Handler(FileSystemEventHandler):
         if isinstance(event, DirCreatedEvent):
             print(f"Watchdog found {event.src_path} directory created...")
             rootdir = event.src_path
+            print(f"Root directory {rootdir}")
             files = os.listdir(rootdir)
+            print(f"Files {files}")
         elif isinstance(event, FileCreatedEvent):
             print(f"Watchdog handling {event.src_path} file created...")
             rootdir = os.path.dirname(event.src_path)
+            print(f"Root directory {rootdir}")
             files = os.listdir(rootdir)
+            print(f"Files {files}")
         else: return
 
-        if (
+        if not (
             "WhiteReference" in files
             and "WhiteReference.hdr" in files
             and "DarkReference" in files
@@ -110,11 +114,12 @@ class Handler(FileSystemEventHandler):
             and "raw" in files
             and "raw.hdr" in files
             and "frameIndex.txt" in files
-        ):
-            temp_arr = analysis(event.src_path)
+        ): return
         
-        image_id = ""
-        output_filepath = ANALYSIS_DIR / (image_id + ".npy")
+        temp_arr = analysis(event.src_path)
+        foldername = rootdir[rootdir.rfind("/"):]
+        print(foldername)
+        output_filepath = ANALYSIS_DIR / (foldername + ".npy")
         np.save(output_filepath, temp_arr, allow_pickle=True)
         upload_file = UploadDataFile(output_filepath, rootdir=rootdir)
         upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
