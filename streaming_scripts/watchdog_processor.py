@@ -1,7 +1,7 @@
 ########## Imports ##########
 
 import numpy as np
-import pathlib, importlib, logging, datetime, json, platform
+import os, pathlib, importlib, logging, time, datetime, json, platform
 from threading import Thread
 from openmsitoolbox.logging import OpenMSILogger
 from openmsistream import (
@@ -10,6 +10,12 @@ from openmsistream import (
     MetadataJSONReproducer,
     UploadDataFile,
 )
+from watchdog.events import (
+    FileCreatedEvent,
+    DirCreatedEvent,
+)
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 ########## Setup ##########
 
@@ -25,6 +31,9 @@ CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confl
 
 # Path to the directory to store the reconstructed data
 RECO_DIR = repo_root_dir / "streaming_scripts" / "image_reco"
+
+# Path to the director to store temperature arrays resulting from analysis
+ANALYSIS_DIR = repo_root_dir / "streaming_scripts" / "processor_1"
 
 
 
@@ -60,6 +69,56 @@ def download_task(download_directory):
     msg += "\n\t".join([str(filepath) for filepath in complete_filepaths])
     download_directory.logger.info(msg)
 
+class Watcher:
+    def __init__(self, path, handler):
+        self.observer = Observer()
+        self.watch_directory = path
+        self.handler = handler
+
+    def run(self):
+        self.observer.schedule(self.handler, self.watch_directory, recursive=True)
+        self.observer.start()
+        try:
+            while True:
+                time.sleep(3)
+        except:
+            self.observer.stop()
+            print("Observer Stopped")
+ 
+        self.observer.join()
+
+def analysis(folder_path): return np.array([[1, 2], [3, 4], [5, 6]])
+
+class Handler(FileSystemEventHandler):
+    @staticmethod
+    def on_created(event):
+        if isinstance(event, DirCreatedEvent):
+            print(f"Watchdog found {event.src_path} directory created...")
+            rootdir = event.src_path
+            files = os.listdir(rootdir)
+        elif isinstance(event, FileCreatedEvent):
+            print(f"Watchdog handling {event.src_path} file created...")
+            rootdir = os.path.dirname(event.src_path)
+            files = os.listdir(rootdir)
+        else: return
+
+        if (
+            "WhiteReference" in files
+            and "WhiteReference.hdr" in files
+            and "DarkReference" in files
+            and "DarkReference.hdr" in files
+            and "raw" in files
+            and "raw.hdr" in files
+            and "frameIndex.txt" in files
+        ):
+            temp_arr = analysis(event.src_path)
+        
+        image_id = ""
+        output_filepath = ANALYSIS_DIR / (image_id + ".npy")
+        np.save(output_filepath, temp_arr, allow_pickle=True)
+        upload_file = UploadDataFile(output_filepath, rootdir=rootdir)
+        upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
+
 
 
 ########## Run ##########
@@ -76,4 +135,7 @@ download_thread = Thread(
     args=(dfdd,),
 )
 
-if __name__ == "__main__": download_thread.start()
+if __name__ == "__main__": 
+    download_thread.start()
+    watcher = Watcher(RECO_DIR, Handler())
+    watcher.run()
