@@ -92,6 +92,8 @@ def analysis(folder_path): return np.array([[1, 2], [3, 4], [5, 6]])
 class Handler(FileSystemEventHandler):
     @staticmethod
     def on_created(event):
+        if event.src_path[-4:] == ".npy" or event.src_path[-4:] == ".log":
+            return
         if isinstance(event, DirCreatedEvent):
             print(f"Watchdog found {event.src_path} directory created...")
             rootdir = event.src_path
@@ -119,9 +121,10 @@ class Handler(FileSystemEventHandler):
         temp_arr = analysis(event.src_path)
         foldername = rootdir[rootdir.rfind("/")+1:]
         print(foldername)
-        output_filepath = ANALYSIS_DIR / (foldername + ".npy")
+        # output_filepath = ANALYSIS_DIR / (foldername + ".npy")
+        output_filepath = rootdir + "/" + foldername + ".npy"
         np.save(output_filepath, temp_arr, allow_pickle=True)
-        upload_file = UploadDataFile(output_filepath, rootdir=rootdir)
+        upload_file = UploadDataFile(pathlib.Path(output_filepath), rootdir=rootdir)
         upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
 
 
