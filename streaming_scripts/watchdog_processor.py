@@ -109,13 +109,15 @@ class Handler(FileSystemEventHandler):
         else: return
 
         if not (
-            "whiteReference.raw" in files
+            "whiteReference" in files
             and "whiteReference.hdr" in files
-            and "darkReference.raw" in files
-            and "darkReference.hdr" in files
-            and "raw.raw" in files
+            and "darkReference" in files
+            and "darkReference" in files
+            and "raw" in files
             and "raw.hdr" in files
-            # and "frameIndex.txt" in files
+            and "data" in files
+            and "data.hdr" in files
+            and "frameIndex.txt" in files
         ): return
         
         temp_arr = analysis(event.src_path)
