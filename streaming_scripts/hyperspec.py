@@ -24,13 +24,18 @@ TOPIC_NAME = "tutorial_data"
 # The name of the topic to consume files from
 CONSUMER_TOPIC_NAME = "tutorial_metadata"
 
-# Paths to the config file and the directory holding the test files
-repo_root_dir = pathlib.Path().resolve().parent
-CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
-TEST_FILE_DIR = repo_root_dir / "streaming_scripts" / "test_folder"
+root_dir = pathlib.Path("C:")
+CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
+TEST_FILE_DIR = root_dir / "Headwall" / "sensor1" / "captured"
+STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "sensor1" / "pyrometry_results"
 
-# Path to the directory to store the StreamProcessor output
-STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "streaming_scripts" / "processor_2"
+# # Paths to the config file and the directory holding the test files
+# repo_root_dir = pathlib.Path().resolve().parent
+# CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
+# TEST_FILE_DIR = repo_root_dir / "streaming_scripts" / "test_folder"
+
+# # Path to the directory to store the StreamProcessor output
+# STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "streaming_scripts" / "processor_2"
 
 
 
@@ -63,7 +68,7 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
         try:
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_remade.npy"
+            output_filepath = self._output_dir / f"{rel_fp_str}_result.npy"
 
             with lock:
                 with open(output_filepath, "wb") as filep:
