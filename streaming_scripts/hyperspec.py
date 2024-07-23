@@ -20,9 +20,9 @@ from openmsistream import (
 matplotlib.use("Agg")
 
 # The name of the topic to work with
-TOPIC_NAME = "tutorial_data"
+TOPIC_NAME = "hyperspec_LDFZ_data"
 # The name of the topic to consume files from
-CONSUMER_TOPIC_NAME = "tutorial_metadata"
+CONSUMER_TOPIC_NAME = "hyperspec_LDFZ_result"
 
 # root_dir = pathlib.Path("C:/")
 # CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"

@@ -20,14 +20,14 @@ from watchdog.observers import Observer
 ########## Setup ##########
 
 # The name of the topic to consume files from
-CONSUMER_TOPIC_NAME = "tutorial_data"
-TOPIC_NAME = "tutorial_metadata"
+CONSUMER_TOPIC_NAME = "hyperspec_LDFZ_data"
+TOPIC_NAME = "hyperspec_LDFZ_result"
 
 # Path to the root directory of this repo
 repo_root_dir = pathlib.Path().resolve().parent
 
 # Paths to the config file and the directory holding the test files
-CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
+CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "paradim01_broker.config"
 
 # Path to the directory to store the reconstructed data
 RECO_DIR = repo_root_dir / "streaming_scripts" / "image_reco"

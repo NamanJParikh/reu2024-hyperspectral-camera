@@ -1,0 +1,5 @@
+[DataFileDownloadDirectory 2024-07-23 11:46:45] ERROR: encountered an exception when gathering initial "tutorial_data" topic offsets for consumer group ID "create_new". The error will be logged below and re-raised.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/consumer_group.py", line 165, in __get_group_starting_offsets
+    raise RuntimeError(
+RuntimeError: ERROR: number of partitions for topic tutorial_data is 0
