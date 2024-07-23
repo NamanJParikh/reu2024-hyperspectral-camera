@@ -24,18 +24,18 @@ TOPIC_NAME = "tutorial_data"
 # The name of the topic to consume files from
 CONSUMER_TOPIC_NAME = "tutorial_metadata"
 
-root_dir = pathlib.Path("C:/")
-CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
-TEST_FILE_DIR = root_dir / "Headwall" / "sensor1" / "captured"
-STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "Headwall" / "sensor1" / "pyrometry_results"
+# root_dir = pathlib.Path("C:/")
+# CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
+# TEST_FILE_DIR = root_dir / "Headwall" / "sensor1" / "captured"
+# STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "Headwall" / "sensor1" / "pyrometry_results"
 
-# # Paths to the config file and the directory holding the test files
-# repo_root_dir = pathlib.Path().resolve().parent
-# CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
-# TEST_FILE_DIR = repo_root_dir / "streaming_scripts" / "test_folder"
+# Paths to the config file and the directory holding the test files
+repo_root_dir = pathlib.Path().resolve().parent
+CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
+TEST_FILE_DIR = repo_root_dir / "streaming_scripts" / "test_folder"
 
-# # Path to the directory to store the StreamProcessor output
-# STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "streaming_scripts" / "processor_2"
+# Path to the directory to store the StreamProcessor output
+STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "streaming_scripts" / "processor_2"
 
 
 
@@ -59,12 +59,10 @@ def upload_task(upload_directory, *args, **kwargs):
     upload_directory.logger.info(msg)
 
 class PlaceholderStreamProcessor(DataFileStreamProcessor):
-    """Performs a placeholder task (writing out a file to the local system) for every
-    data file reconstructed from a topic
+    """Saves the returned temperature array as well as a heatmap plot of it
     """
 
     def _process_downloaded_data_file(self, datafile, lock):
-        "Writes out a file with a timestamp for each reconstructed file"
         try:
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
