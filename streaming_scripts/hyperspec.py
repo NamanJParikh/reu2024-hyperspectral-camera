@@ -25,13 +25,13 @@ TOPIC_NAME = "hyperspec_LDFZ_data"
 CONSUMER_TOPIC_NAME = "hyperspec_LDFZ_result"
 
 # root_dir = pathlib.Path("C:/")
-# CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "confluent_cloud_broker.config"
+# CONFIG_FILE_PATH = root_dir / "Headwall" / "sensor1" / "broker_configs" / "paradim01_broker.config"
 # TEST_FILE_DIR = root_dir / "Headwall" / "sensor1" / "captured"
 # STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "Headwall" / "sensor1" / "pyrometry_results"
 
 # Paths to the config file and the directory holding the test files
 repo_root_dir = pathlib.Path().resolve().parent
-CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
+CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "paradim01_broker.config"
 TEST_FILE_DIR = repo_root_dir / "streaming_scripts" / "test_folder"
 
 # Path to the directory to store the StreamProcessor output

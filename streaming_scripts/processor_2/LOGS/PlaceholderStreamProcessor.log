@@ -1,0 +1,5 @@
+[PlaceholderStreamProcessor 2024-07-23 12:48:59] ERROR: encountered an exception when gathering initial "hyperspec_LDFZ_result" topic offsets for consumer group ID "create_new". The error will be logged below and re-raised.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/consumer_group.py", line 165, in __get_group_starting_offsets
+    raise RuntimeError(
+RuntimeError: ERROR: number of partitions for topic hyperspec_LDFZ_result is 0
