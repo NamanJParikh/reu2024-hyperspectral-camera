@@ -24,3 +24,237 @@ Traceback (most recent call last):
     raise exc_type(msg)
 ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_23_13_39_23/raw is expecting 374 chunks but found a chunk from a split with 397 total chunks.
 [DataFileDownloadDirectory 2024-07-23 13:51:30] WARNING: hashes for file 2024_07_23_13_39_23/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 13:41:09] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_13_41_02/data is expecting 41 chunks but found a chunk from a split with 59 total chunks.
+[DataFileDownloadDirectory 2024-07-24 13:41:09] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_13_41_02/data is expecting 41 chunks but found a chunk from a split with 59 total chunks.
+[DataFileDownloadDirectory 2024-07-24 13:46:10] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_13_41_02/data is expecting 41 chunks but found a chunk from a split with 59 total chunks.
+[DataFileDownloadDirectory 2024-07-24 13:46:10] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_13_41_02/data is expecting 41 chunks but found a chunk from a split with 59 total chunks.
+[DataFileDownloadDirectory 2024-07-24 13:51:10] WARNING: failed to synchronously commit offset of last message received. Duplicate messages may be read the next time this Consumer is started. Error will be logged below but not re-raised.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 125, in __commit_last_message_offset
+    tps = consumer.commit(self.last_message, asynchronous=False)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/openmsistream_consumer.py", line 314, in commit
+    return self._consumer.commit(message=message, asynchronous=asynchronous)
+cimpl.KafkaException: KafkaError{code=ILLEGAL_GENERATION,val=22,str="Commit failed: Broker: Specified group generation id is not valid"}
+[DataFileDownloadDirectory 2024-07-24 13:51:10] WARNING: failed to synchronously commit offset of last message received. Duplicate messages may be read the next time this Consumer is started. Error will be logged below but not re-raised.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 125, in __commit_last_message_offset
+    tps = consumer.commit(self.last_message, asynchronous=False)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/openmsistream_consumer.py", line 314, in commit
+    return self._consumer.commit(message=message, asynchronous=asynchronous)
+cimpl.KafkaException: KafkaError{code=UNKNOWN_MEMBER_ID,val=25,str="Commit failed: Broker: Unknown member"}
+[DataFileDownloadDirectory 2024-07-24 16:44:30] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 191 chunks but found a chunk from a split with 227 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:44:30] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 191 chunks but found a chunk from a split with 227 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:49:31] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 191 chunks but found a chunk from a split with 227 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:49:31] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 191 chunks but found a chunk from a split with 227 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:50:31] WARNING: hashes for file 2024_07_24_16_44_07/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:50:32] WARNING: hashes for file 2024_07_24_16_44_07/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:50:34] WARNING: hashes for file 2024_07_24_16_44_07/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:50:35] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 55 chunks but found a chunk from a split with 87 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:50:35] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 55 chunks but found a chunk from a split with 87 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:50:35] WARNING: hashes for file 2024_07_24_16_44_07/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:50:35] WARNING: hashes for file 2024_07_24_16_44_07/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:51:01] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 55 chunks but found a chunk from a split with 87 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:51:01] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/data is expecting 55 chunks but found a chunk from a split with 87 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:53:56] WARNING: hashes for file 2024_07_24_16_44_07/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:53:57] WARNING: hashes for file 2024_07_24_16_44_07/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:54:00] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/raw is expecting 41 chunks but found a chunk from a split with 57 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:54:01] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/raw is expecting 41 chunks but found a chunk from a split with 57 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:54:28] WARNING: hashes for file 2024_07_24_16_44_07/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:54:28] WARNING: hashes for file 2024_07_24_16_44_07/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:54:30] WARNING: hashes for file 2024_07_24_16_44_07/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:54:30] WARNING: hashes for file 2024_07_24_16_44_07/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 16:54:32] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/raw is expecting 41 chunks but found a chunk from a split with 57 total chunks.
+[DataFileDownloadDirectory 2024-07-24 16:54:32] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_16_44_07/raw is expecting 41 chunks but found a chunk from a split with 57 total chunks.
+[DataFileDownloadDirectory 2024-07-24 17:29:42] WARNING: hashes for file 2024_07_24_17_02_34/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:42] WARNING: hashes for file 2024_07_24_17_02_34/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:44] WARNING: hashes for file 2024_07_24_17_02_34/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:45] WARNING: hashes for file 2024_07_24_17_02_34/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:47] WARNING: hashes for file 2024_07_24_17_02_34/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:47] WARNING: hashes for file 2024_07_24_17_02_34/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:48] WARNING: hashes for file 2024_07_24_17_02_34/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:29:52] WARNING: hashes for file 2024_07_24_17_02_34/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:29] WARNING: hashes for file 2024_07_24_17_02_34/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:29] WARNING: hashes for file 2024_07_24_17_02_34/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:30] WARNING: hashes for file 2024_07_24_17_02_34/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:32] WARNING: hashes for file 2024_07_24_17_02_34/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:34] WARNING: hashes for file 2024_07_24_17_02_34/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:34] WARNING: hashes for file 2024_07_24_17_02_34/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:34] WARNING: hashes for file 2024_07_24_17_02_34/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:47:38] ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_17_02_34/data is expecting 191 chunks but found a chunk from a split with 227 total chunks.
+[DataFileDownloadDirectory 2024-07-24 17:47:38] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 100, in __do_alive_loop_iteration
+    retval = self._process_message(self.lock, msg)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_download_directory.py", line 107, in _process_message
+    retval = super()._process_message(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/actor/data_file_chunk_handlers.py", line 118, in _process_message
+    retval = self.files_in_progress_by_path[dfc.relative_filepath].add_chunk(
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/data_file_io/entity/download_data_file.py", line 139, in add_chunk
+    self.logger.error(errmsg, exc_type=ValueError)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 186, in error
+    raise exc_type(msg)
+ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/streaming_scripts/image_reco/2024_07_24_17_02_34/data is expecting 191 chunks but found a chunk from a split with 227 total chunks.
+[DataFileDownloadDirectory 2024-07-24 17:50:52] WARNING: hashes for file 2024_07_24_17_02_34/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:50:52] WARNING: hashes for file 2024_07_24_17_02_34/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:50:53] WARNING: hashes for file 2024_07_24_17_02_34/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:50:55] WARNING: hashes for file 2024_07_24_17_02_34/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:55:27] WARNING: hashes for file 2024_07_24_17_53_57/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:55:29] WARNING: hashes for file 2024_07_24_17_53_57/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:55:39] WARNING: hashes for file 2024_07_24_17_53_57/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:55:42] WARNING: hashes for file 2024_07_24_17_53_57/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:56:08] WARNING: hashes for file 2024_07_24_17_53_57/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:56:12] WARNING: hashes for file 2024_07_24_17_53_57/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:56:33] WARNING: hashes for file 2024_07_24_17_53_57/frameIndex.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:56:36] WARNING: hashes for file 2024_07_24_17_53_57/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:56:47] WARNING: hashes for file 2024_07_24_17_53_57/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-24 17:56:50] WARNING: hashes for file 2024_07_24_17_53_57/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.

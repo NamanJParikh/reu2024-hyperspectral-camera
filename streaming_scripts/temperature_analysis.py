@@ -113,6 +113,8 @@ def shrink_image(chunk_size=10, quiet=False):
             end_idx = (i + 1) * chunk_size
             if end_idx < image.shape[1]:
                 horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
+            elif start_idx == image.shape[1]:
+                continue
             else:
                 horiz_slices.append(compress_horiz_slice(image, start_idx, image.shape[1]))
 
@@ -180,11 +182,13 @@ def analysis(folder_path):
 
     _ = shrink_image()
 
-    temp_arr = np.zeros((image.size[0], image.size[1]))
-    for (i,j) in itertools.product(image.size[0], image.size[1]):
+    temp_arr = np.zeros((image.shape[0], image.shape[1]))
+    for (i,j) in itertools.product(range(image.shape[0]), range(image.shape[1])):
         spectrum = image[i][j]
-        result, cost = fit_spectrum(quiet=True)
-        temp_arr[i][j] = result[-1]
+        try:
+            result, cost = fit_spectrum(quiet=True, check_units=False)
+            temp_arr[i][j] = result[-1]
+        except: temp_arr[i][j] = -1
     
     return temp_arr
 

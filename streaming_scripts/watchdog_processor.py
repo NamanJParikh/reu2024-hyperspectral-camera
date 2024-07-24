@@ -113,23 +113,25 @@ class Handler(FileSystemEventHandler):
             print(f"Files {files}")
         else: return
 
+        foldername = rootdir[rootdir.rfind("/")+1:]
+        print(foldername)
+        output_filepath = rootdir + "/" + foldername + ".npy"
+
         if not (
             "whiteReference" in files
             and "whiteReference.hdr" in files
             and "darkReference" in files
-            and "darkReference" in files
+            and "darkReference.hdr" in files
             and "raw" in files
             and "raw.hdr" in files
             and "data" in files
             and "data.hdr" in files
             and "frameIndex.txt" in files
+            and foldername + ".npy" not in files
         ): return
-        
-        temp_arr = temperature_analysis.analysis(event.src_path)
-        foldername = rootdir[rootdir.rfind("/")+1:]
-        print(foldername)
-        # output_filepath = ANALYSIS_DIR / (foldername + ".npy")
-        output_filepath = rootdir + "/" + foldername + ".npy"
+
+        folder_path = str(RECO_DIR / foldername)
+        temp_arr = temperature_analysis.analysis(folder_path)
         np.save(output_filepath, temp_arr, allow_pickle=True)
         upload_file = UploadDataFile(pathlib.Path(output_filepath), rootdir=rootdir)
         upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
