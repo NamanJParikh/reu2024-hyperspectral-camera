@@ -102,42 +102,20 @@ def compress_horiz_slice(data, start_idx, end_idx):
     return np.array([np.divide(np.sum(data[:,start_idx:end_idx,:],axis=1), 
                      end_idx-start_idx)])
 
-def compress_vert_slice(data, start_idx, end_idx):
-    return np.array([np.divide(np.sum(data[start_idx:end_idx,:,:],axis=0), 
-                     end_idx-start_idx)])
-
 def shrink_image(quiet=False):
     global image
 
-    horiz_slices = []
-    for i in range(image.shape[1] // 10):
-        start_idx = i * 10
-        end_idx = (i * 10) + 1
-        if end_idx < image.shape[1]:
-            horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
-        else:
-            horiz_slices.append(compress_horiz_slice(image, start_idx, image.shape[1]))
-    image = np.concatenate(tuple(horiz_slices), axis=0)
-
-    horiz_slices = []
-    for i in range(image.shape[1] // 10):
-        start_idx = i * 10
-        end_idx = (i * 10) + 1
-        if end_idx < image.shape[1]:
-            horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
-        else:
-            horiz_slices.append(compress_horiz_slice(image, start_idx, image.shape[1]))
-    image = np.concatenate(tuple(horiz_slices), axis=0)
-
-    # vert_slices = []
-    # for i in range(image.shape[0] // 10):
-    #     start_idx = i * 10
-    #     end_idx = (i * 10) + 1
-    #     if end_idx < image.shape[0]:
-    #         vert_slices.append(compress_vert_slice(image, start_idx, end_idx))
-    #     else:
-    #         vert_slices.append(compress_vert_slice(image, start_idx, image.shape[0]))
-    # image = np.concatenate(tuple(vert_slices), axis=1)
+    for itera in range(2):
+        horiz_slices = []
+        for i in range(image.shape[1] // 10):
+            start_idx = i * 10
+            end_idx = (i + 1) * 10
+            if end_idx < image.shape[1]:
+                horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
+            else:
+                horiz_slices.append(compress_horiz_slice(image, start_idx, image.shape[1]))
+                
+        image = np.concatenate(tuple(horiz_slices), axis=0)
 
     return image
 
