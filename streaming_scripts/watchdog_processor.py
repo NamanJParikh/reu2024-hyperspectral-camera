@@ -92,7 +92,7 @@ class Watcher:
  
         self.observer.join()
 
-def analysis(folder_path): return np.array([[1, 2], [3, 4], [5, 6]])
+# def analysis(folder_path): return np.array([[1, 2], [3, 4], [5, 6]])
 
 class Handler(FileSystemEventHandler):
     @staticmethod
@@ -125,7 +125,7 @@ class Handler(FileSystemEventHandler):
             and "frameIndex.txt" in files
         ): return
         
-        temp_arr = analysis(event.src_path)
+        temp_arr = temperature_analysis.analysis(event.src_path)
         foldername = rootdir[rootdir.rfind("/")+1:]
         print(foldername)
         # output_filepath = ANALYSIS_DIR / (foldername + ".npy")
