@@ -102,19 +102,19 @@ def compress_horiz_slice(data, start_idx, end_idx):
     return np.array([np.divide(np.sum(data[:,start_idx:end_idx,:],axis=1), 
                      end_idx-start_idx)])
 
-def shrink_image(quiet=False):
+def shrink_image(chunk_size=10, quiet=False):
     global image
 
     for itera in range(2):
         horiz_slices = []
-        for i in range(image.shape[1] // 10):
-            start_idx = i * 10
-            end_idx = (i + 1) * 10
+        for i in range(image.shape[1] // chunk_size):
+            start_idx = i * chunk_size
+            end_idx = (i + 1) * chunk_size
             if end_idx < image.shape[1]:
                 horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
             else:
                 horiz_slices.append(compress_horiz_slice(image, start_idx, image.shape[1]))
-                
+
         image = np.concatenate(tuple(horiz_slices), axis=0)
 
     return image
