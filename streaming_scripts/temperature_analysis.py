@@ -12,6 +12,7 @@ from sklearn.linear_model import LinearRegression
 import spectral.io.envi as envi
 from spectral import imshow, view_cube
 from tqdm import tqdm
+from tqdm.contrib import itertools
 
 ### Constants ###
 h = 6.626e-34 # Planck's constant
@@ -180,12 +181,10 @@ def analysis(folder_path):
     _ = shrink_image()
 
     temp_arr = np.zeros((image.size[0], image.size[1]))
-    for i in range(image.size[0]):
-        for j in range(image.size[1]):
-            print("Fitting...", end=" ")
-            spectrum = image[i][j]
-            result, cost = fit_spectrum(quiet=True)
-            temp_arr[i][j] = result[-1]
+    for (i,j) in itertools.product(image.size[0], image.size[1]):
+        spectrum = image[i][j]
+        result, cost = fit_spectrum(quiet=True)
+        temp_arr[i][j] = result[-1]
     
     return temp_arr
 
