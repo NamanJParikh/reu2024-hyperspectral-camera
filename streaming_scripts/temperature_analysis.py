@@ -98,10 +98,38 @@ def get_bands(paths, quiet=False):
 
     return None
 
-def process_image(quiet=False):
+def compress_horiz_slice(data, start_idx, end_idx):
+    return np.divide(np.sum(data[:,start_idx:end_idx,:],axis=1), 
+                     end_idx-start_idx)
+
+def compress_vert_slice(data, start_idx, end_idx):
+    return np.divide(np.sum(data[start_idx:end_idx,:,:],axis=1), 
+                     end_idx-start_idx)
+
+def shrink_image(quiet=False):
     global image
 
-    
+    horiz_slices = []
+    for i in range(image.size[0] // 10):
+        start_idx = i * 10
+        end_idx = (i * 10) + 1
+        if end_idx < image.size[0]:
+            horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
+        else:
+            horiz_slices.append(compress_horiz_slice(image, start_idx, image.size[0]))
+    image = np.concatenate(tuple(horiz_slices), axis=0)
+
+    vert_slices = []
+    for i in range(image.size[1] // 10):
+        start_idx = i * 10
+        end_idx = (i * 10) + 1
+        if end_idx < image.size[1]:
+            horiz_slices.append(compress_horiz_slice(image, start_idx, end_idx))
+        else:
+            horiz_slices.append(compress_horiz_slice(image, start_idx, image.size[1]))
+    image = np.concatenate(tuple(horiz_slices), axis=1)
+
+    return image
 
 def fit_spectrum(quiet=False, check_units=True):
     """Fits the selected spectrum
@@ -150,6 +178,7 @@ def fit_spectrum(quiet=False, check_units=True):
     return result.x, result.cost
 
 ### Analysis ###
+
 def analysis(folder_path):
     global image
     global pixel
@@ -160,11 +189,12 @@ def analysis(folder_path):
     image = load_data(paths, quiet=True)
     _ = get_bands(paths, quiet=True)
 
-    _ = process_image()
+    _ = shrink_image()
 
     temp_arr = np.zeros((image.size[0], image.size[1]))
     for i in range(image.size[0]):
         for j in range(image.size[1]):
+            print("Fitting...", end=" ")
             spectrum = image[i][j]
             result, cost = fit_spectrum(quiet=True)
             temp_arr[i][j] = result[-1]
