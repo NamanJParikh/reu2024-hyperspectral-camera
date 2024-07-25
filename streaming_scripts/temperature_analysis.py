@@ -69,8 +69,7 @@ def load_data(paths, quiet=False):
     except:
         print("Load failed, waiting 30 seconds...")
         sleep(30)
-        analysis(folder)
-        exit()
+        return "FAIL"
 
     corrected_data = np.divide(
         np.subtract(data_tensor, dark_tensor),
@@ -189,6 +188,8 @@ def analysis(folder_path):
 
     paths = construct_paths(folder)
     image = load_data(paths, quiet=True)
+    if type(image) == str:
+        return "FAIL"
     _ = get_bands(paths, quiet=True)
 
     _ = shrink_image()

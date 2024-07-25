@@ -131,7 +131,10 @@ class Handler(FileSystemEventHandler):
         ): return
 
         folder_path = str(RECO_DIR / foldername)
-        temp_arr = temperature_analysis.analysis(folder_path)
+        temp_arr = "FAIL"
+        while type(temp_arr) == str:
+            temp_arr = temperature_analysis.analysis(folder_path)
+        
         np.save(output_filepath, temp_arr, allow_pickle=True)
         upload_file = UploadDataFile(pathlib.Path(output_filepath), rootdir=rootdir)
         upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
