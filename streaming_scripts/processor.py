@@ -90,7 +90,7 @@ class ImageAnalysisProcessor(DataFileStreamProcessor):
             folder = rel_fp_str[:rel_fp_str.rfind("/")]
             folderpath = str(self._output_dir / folder)
             file = rel_fp_str[rel_fp_str.rfind("/")+1:]
-            output_filepath = self._output_dir / folder / f"{folder}_result.npy"
+            output_filepath = self._output_dir / folder / "result.npy"
 
             print(folder, file)
 

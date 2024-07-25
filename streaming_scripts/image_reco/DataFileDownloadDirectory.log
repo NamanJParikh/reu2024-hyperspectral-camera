@@ -258,3 +258,29 @@ ValueError: ERROR: DownloadDataFileToDisk with filepath /Users/namanparikh/Docum
 [DataFileDownloadDirectory 2024-07-24 17:56:36] WARNING: hashes for file 2024_07_24_17_53_57/raw not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
 [DataFileDownloadDirectory 2024-07-24 17:56:47] WARNING: hashes for file 2024_07_24_17_53_57/motion.txt not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
 [DataFileDownloadDirectory 2024-07-24 17:56:50] WARNING: hashes for file 2024_07_24_17_53_57/data not matched after reconstruction! All data have been written to disk, but not as they were uploaded.
+[DataFileDownloadDirectory 2024-07-25 11:08:52] ERROR: encountered an error in a call to consumer.poll() and this message will be skipped. Exception will be logged below and re-raised.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/openmsistream_consumer.py", line 256, in get_next_message
+    consumed_msg = self._consumer.poll(*poll_args, **poll_kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/confluent_kafka/deserializing_consumer.py", line 104, in poll
+    raise ConsumeError(msg.error(), kafka_message=msg)
+confluent_kafka.error.ConsumeError: KafkaError{code=_MAX_POLL_EXCEEDED,val=-147,str="Application maximum poll interval (300000ms) exceeded by 398ms"}
+[DataFileDownloadDirectory 2024-07-25 11:08:53] WARNING: a thread raised an Exception, which will be logged as an error below but not re-raised. The thread that raised the error will be restarted.
+Traceback (most recent call last):
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/utilities/exception_tracking_thread.py", line 29, in run
+    super().run(*args, **kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 62, in _run_worker
+    self.__do_alive_loop_iteration(consumer)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/controlled_message_processor.py", line 93, in __do_alive_loop_iteration
+    msg = consumer.get_next_message(self.CONSUMER_POLL_TIMEOUT)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/openmsistream_consumer.py", line 262, in get_next_message
+    self.logger.error(errmsg, exc_info=exc, reraise=True)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsitoolbox/logging/openmsi_logger.py", line 184, in error
+    raise kwargs["exc_info"]
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/openmsistream/kafka_wrapper/openmsistream_consumer.py", line 256, in get_next_message
+    consumed_msg = self._consumer.poll(*poll_args, **poll_kwargs)
+  File "/Users/namanparikh/opt/anaconda3/envs/openmsi/lib/python3.9/site-packages/confluent_kafka/deserializing_consumer.py", line 104, in poll
+    raise ConsumeError(msg.error(), kafka_message=msg)
+confluent_kafka.error.ConsumeError: KafkaError{code=_MAX_POLL_EXCEEDED,val=-147,str="Application maximum poll interval (300000ms) exceeded by 398ms"}
