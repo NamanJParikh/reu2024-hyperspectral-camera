@@ -10,51 +10,108 @@ from openmsistream import (
     MetadataJSONReproducer,
     UploadDataFile,
 )
+import temperature_analysis
+
+
+
+########## File Tracking ##########
+
+class FolderTracker():
+    def __init__(self):
+        self.analyzed = False
+        self.dict = {
+            "whiteReference": False,
+            "whiteReference.hdr": False,
+            "darkReference": False,
+            "darkReference.hdr": False,
+            "data": False,
+            "data.hdr": False,
+            "raw": False,
+            "raw.hdr": False,
+            "frameIndex.txt": False
+        }
+
+    def update(self, filename):
+        if filename in self.dict.keys(): self.dict[filename] = True
+
+    def is_ready(self):
+        return (
+            self.dict["whiteReference"]
+            and self.dict["whiteReference.hdr"]
+            and self.dict["darkReference"]
+            and self.dict["darkReference.hdr"]
+            and self.dict["data"]
+            and self.dict["data.hdr"]
+            and self.dict["raw"]
+            and self.dict["raw.hdr"]
+            and self.dict["frameIndex.txt"]
+        )
+
+    def mark_analyzed(self):
+        self.analyzed = True
+    
+    def is_analyzed(self):
+        return self.analyzed
+
+GlobalTracker = dict()
 
 
 
 ########## Setup ##########
 
 # The name of the topic to consume files from
-CONSUMER_TOPIC_NAME = "tutorial_data"
-TOPIC_NAME = "tutorial_metadata"
+CONSUMER_TOPIC_NAME = "hyperspec_LDFZ_data"
+TOPIC_NAME = "hyperspec_LDFZ_result"
 
 # Path to the root directory of this repo
 repo_root_dir = pathlib.Path().resolve().parent
 
 # Paths to the config file and the directory holding the test files
-CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "confluent_cloud_broker.config"
+CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "paradim01_broker.config"
 
-# Path to the directory to store the StreamProcessor output
+# Path to the directory to store the reconstructed data
 STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "streaming_scripts" / "processor_1"
 
 
 
 ########## Tasks ##########
 
-class PlaceholderStreamProcessor(DataFileStreamProcessor):
+class ImageAnalysisProcessor(DataFileStreamProcessor):
     """Performs a placeholder task (writing out a file to the local system) for every
     data file reconstructed from a topic
     """
 
     def _process_downloaded_data_file(self, datafile, lock):
-        "Writes out a file with a timestamp for each reconstructed file"
+        "Runs temperature analysis of image when all needed files have been streamed"
         try:
             rel_filepath = datafile.relative_filepath
-            rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
-            output_filepath = self._output_dir / f"{rel_fp_str}_placeholder.npy"
+            rel_fp_str = str(rel_filepath.as_posix())
+
+            folder = rel_fp_str[:rel_fp_str.rfind("/")]
+            file = rel_fp_str[rel_fp_str.rfind("/")+1:]
+            output_filepath = self._output_dir / f"{folder}_result.npy"
+
+            print(folder, file)
+
             with lock:
-                arr = np.array([[1, 2, 3], [4, 5, 6]])
-                np.save(output_filepath, arr, allow_pickle=True)
-                upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
-                upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
+                if folder not in GlobalTracker.keys():
+                    GlobalTracker[folder] = FolderTracker()
+                
+                (GlobalTracker[folder]).update(file)
+                if (GlobalTracker[folder]).is_analyzed():
+                    return None
+                if (GlobalTracker[folder]).is_ready():
+                    temp_arr = temperature_analysis.analysis(folder)
+                    np.save(output_filepath, temp_arr, allow_pickle=True)
+                    upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
+                    upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
+
         except Exception as exc:
             return exc
         return None
     
     @classmethod
     def run_from_command_line(cls, args=None):
-        "Not used in this example... stay tuned for the live coding tomorrow!"
         pass
 
 def stream_processor_task(stream_processor):
@@ -92,15 +149,16 @@ def stream_processor_task(stream_processor):
 ########## Run ##########
 
 # Create the StreamProcessor
-psp = PlaceholderStreamProcessor(
-    CONFIG_FILE_PATH,
-    CONSUMER_TOPIC_NAME,
+iap = ImageAnalysisProcessor(
+    config_file=CONFIG_FILE_PATH,
+    topic_name=CONSUMER_TOPIC_NAME,
     output_dir=STREAM_PROCESSOR_OUTPUT_DIR,
+    mode="disk"
 )
 # Start running its "process_files_as_read" function in a separate thread
 processor_thread = Thread(
     target=stream_processor_task,
-    args=(psp,),
+    args=(iap,),
 )
 
 if __name__ == "__main__": processor_thread.start()
