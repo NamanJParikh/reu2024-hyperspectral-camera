@@ -88,23 +88,26 @@ class ImageAnalysisProcessor(DataFileStreamProcessor):
             rel_fp_str = str(rel_filepath.as_posix())
 
             folder = rel_fp_str[:rel_fp_str.rfind("/")]
+            folderpath = str(self._output_dir / folder)
             file = rel_fp_str[rel_fp_str.rfind("/")+1:]
-            output_filepath = self._output_dir / f"{folder}_result.npy"
+            output_filepath = self._output_dir / folder / f"{folder}_result.npy"
 
             print(folder, file)
 
             with lock:
                 if folder not in GlobalTracker.keys():
                     GlobalTracker[folder] = FolderTracker()
-                
+
                 (GlobalTracker[folder]).update(file)
+
                 if (GlobalTracker[folder]).is_analyzed():
                     return None
                 if (GlobalTracker[folder]).is_ready():
-                    temp_arr = temperature_analysis.analysis(folder)
+                    temp_arr = temperature_analysis.analysis(folderpath)
                     np.save(output_filepath, temp_arr, allow_pickle=True)
                     upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
                     upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
+                    GlobalTracker[folder].mark_analyzed()
 
         except Exception as exc:
             return exc
