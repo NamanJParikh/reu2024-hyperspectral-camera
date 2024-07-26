@@ -6,7 +6,7 @@ The goal of this project is to install a hyperspectral camera in the Laser Diode
 This folder contains documents for explaining and presenting my work. Most relevant are the pdf files explaining my pyrometry analysis approach and code, the physical setup of the camera and motor, and the design of the data pipeline.
 
 ## PyrometryAnalysis
-This folder contains my work and code developing a hyperspectral pyrometry method. Included are 2 hyperspectral images of heated graphite rods and multiple notebooks containing a variety of data processing and analysis. There is also code from https://github.com/pytaunay/multiwavelength-pyrometry/tree/master, which I tested but ultimately did not use in the final analysis method.
+This folder contains my work and code developing a hyperspectral pyrometry method. There are multiple notebooks containing a variety of data processing and analysis for two images of heated graphite rods. The images are not included in the repository due to their size. There is also code from https://github.com/pytaunay/multiwavelength-pyrometry/tree/master, which I tested but ultimately did not use in the final analysis method.
 
 ## MotorControl
 This folder contains an Arduino sketch and relevant information for its dependencies and setup. The sketch programs the Raspberry Pi to respond to the camera's Hyperspec III software and move the camera down and up repeatedly for some set number of motor ticks, which can be adjusted in the sketch.
