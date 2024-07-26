@@ -1,6 +1,7 @@
 ########## Imports ##########
 
 import numpy as np
+from time import sleep
 import pathlib, importlib, logging, datetime, json, platform
 from threading import Thread
 from openmsitoolbox.logging import OpenMSILogger
@@ -164,4 +165,10 @@ processor_thread = Thread(
     args=(iap,),
 )
 
-if __name__ == "__main__": processor_thread.start()
+if __name__ == "__main__": 
+    processor_thread.start()
+    while True:
+        sleep(86400)
+        for key in GlobalTracker.keys():
+            if GlobalTracker[key].is_analyzed():
+                del GlobalTracker[key]
