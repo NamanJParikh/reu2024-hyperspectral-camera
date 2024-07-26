@@ -68,10 +68,10 @@ TOPIC_NAME = "hyperspec_LDFZ_result"
 repo_root_dir = pathlib.Path().resolve().parent
 
 # Paths to the config file and the directory holding the test files
-CONFIG_FILE_PATH = repo_root_dir / "streaming_scripts" / "config_files" / "paradim01_broker.config"
+CONFIG_FILE_PATH = repo_root_dir / "StreamingScripts" / "config_files" / "paradim01_broker.config"
 
 # Path to the directory to store the reconstructed data
-STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "streaming_scripts" / "processor_1"
+STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "StreamingScripts" / "processor_1"
 
 
 
