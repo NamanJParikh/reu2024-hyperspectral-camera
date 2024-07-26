@@ -75,7 +75,10 @@ void loop()
       // reverse direction
       dir = !dir;
 
-      motor->setTargetPosition(dir ? 200 : 0);  // 1 full rotation = 200steps, so go twice around
+      /* Adjust number of motor rotations or steps here  */
+      int numRotations = 2;
+      int numSteps = numRotations * 200;
+      motor->setTargetPosition(dir ? numSteps : 0);  // 1 full rotation = 200steps, so go twice around
 /*DEBUG      float xactual = motor->getCurrentPosition();
       float vactual = motor->getCurrentSpeed();
     Serial.print("target : ");
