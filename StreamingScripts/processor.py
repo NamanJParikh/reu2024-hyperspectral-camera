@@ -11,6 +11,8 @@ from openmsistream import (
     MetadataJSONReproducer,
     UploadDataFile,
 )
+import sys, os
+sys.path.append(os.path.abspath("/home/nparik15/"))
 import temperature_analysis
 
 
@@ -64,14 +66,18 @@ GlobalTracker = dict()
 CONSUMER_TOPIC_NAME = "hyperspec_LDFZ_data"
 TOPIC_NAME = "hyperspec_LDFZ_result"
 
-# Path to the root directory of this repo
-repo_root_dir = pathlib.Path().resolve().parent
+# # Path to the root directory of this repo
+# repo_root_dir = pathlib.Path().resolve().parent
 
-# Paths to the config file and the directory holding the test files
-CONFIG_FILE_PATH = repo_root_dir / "StreamingScripts" / "config_files" / "paradim01_broker.config"
+# # Paths to the config file and the directory holding the test files
+# CONFIG_FILE_PATH = repo_root_dir / "StreamingScripts" / "config_files" / "paradim01_broker.config"
 
-# Path to the directory to store the reconstructed data
-STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "StreamingScripts" / "processor_1"
+# # Path to the directory to store the reconstructed data
+# STREAM_PROCESSOR_OUTPUT_DIR = repo_root_dir / "StreamingScripts" / "processor_1"
+
+root_dir = pathlib.Path("/home/nparik15/")
+CONFIG_FILE_PATH = root_dir / "config_files" / "paradim01_broker.config"
+RECO_DIR = root_dir / "hyperspec_LDFZ_data"
 
 
 

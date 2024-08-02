@@ -103,6 +103,9 @@ def get_bands(paths, quiet=False):
         print(f"Units = {units}")
         print(f"Number wavelengths = {len(wavelengths)}")
         print(f"Wavelengths: {wavelengths}")
+        print(f"Removing wavelengths over 950 nm...")
+
+    wavelengths = wavelengths[:339]
 
     return None
 
@@ -196,7 +199,7 @@ def analysis(folder_path):
 
     temp_arr = np.zeros((image.shape[0], image.shape[1]))
     for (i,j) in itertools.product(range(image.shape[0]), range(image.shape[1])):
-        spectrum = image[i][j]
+        spectrum = image[i][j][:339]
         try:
             result, cost = fit_spectrum(quiet=True, check_units=False)
             temp_arr[i][j] = result[-1]
