@@ -78,7 +78,7 @@ void loop()
       /* Adjust number of motor rotations or steps here  */
       int numRotations = 3;
       int numSteps = numRotations * 200;
-      motor->setTargetPosition(dir ? numSteps : 0);  // 1 full rotation = 200steps, so go twice around
+      motor->setTargetPosition(dir ? (numSteps + 100) : 0);  // 1 full rotation = 200steps, so go twice around
 /*DEBUG      float xactual = motor->getCurrentPosition();
       float vactual = motor->getCurrentSpeed();
     Serial.print("target : ");
