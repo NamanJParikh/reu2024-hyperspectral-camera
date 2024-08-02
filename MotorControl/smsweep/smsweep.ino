@@ -76,7 +76,7 @@ void loop()
       dir = !dir;
 
       /* Adjust number of motor rotations or steps here  */
-      int numRotations = 2;
+      int numRotations = 3;
       int numSteps = numRotations * 200;
       motor->setTargetPosition(dir ? numSteps : 0);  // 1 full rotation = 200steps, so go twice around
 /*DEBUG      float xactual = motor->getCurrentPosition();
