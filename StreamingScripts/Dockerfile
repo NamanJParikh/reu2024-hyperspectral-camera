@@ -10,4 +10,5 @@ SHELL ["conda", "run", "-n", "openmsi", "/bin/bash", "-c"]
 
 # The code to run when container is started:
 COPY processor.py ./
+COPY temperature_analysis.py ./
 ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "openmsi", "python", "processor.py"]

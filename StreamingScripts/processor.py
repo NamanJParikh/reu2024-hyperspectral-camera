@@ -11,9 +11,6 @@ from openmsistream import (
     MetadataJSONReproducer,
     UploadDataFile,
 )
-import sys, os
-sys.path.append(os.path.abspath("/home/nparik15/"))
-# sys.path.append(os.path.abspath("/Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera"))
 import temperature_analysis
 
 
