@@ -3,7 +3,7 @@ The goal of this project is to install a hyperspectral camera in the Laser Diode
 
 # Repository Structure
 ## Documents
-This folder contains documents for explaining and presenting my work. Most relevant are the pdf files explaining my pyrometry analysis approach and code, the physical setup of the camera and motor, and the design of the data pipeline.
+This folder contains documents for explaining and presenting my work. Most relevant are the pdf files explaining my pyrometry analysis approach and code, the physical setup of the camera and motor, and the design of the data pipeline. There are also json and yml files containing the conda environment that I used for this work.
 
 ## PyrometryAnalysis
 This folder contains my work and code developing a hyperspectral pyrometry method. There are multiple notebooks containing a variety of data processing and analysis for two images of heated graphite rods. The images are not included in the repository due to their size. There is also code from https://github.com/pytaunay/multiwavelength-pyrometry/tree/master, which I tested but ultimately did not use in the final analysis method. The final method is explained in 'Documents/hyperspectral-analysis.pdf'.
