@@ -64,14 +64,17 @@ class PlaceholderStreamProcessor(DataFileStreamProcessor):
 
     def _process_downloaded_data_file(self, datafile, lock):
         try:
+            # construct output paths
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix()).replace("/","_").replace(".","_")
             output_filepath = self._output_dir / f"{rel_fp_str}_result.npy"
 
             with lock:
+                # download the incoming numpy array file
                 with open(output_filepath, "wb") as filep:
                     filep.write(BytesIO(datafile.bytestring).read())
 
+            # load the array and save a thermal gradient plot
             temp_arr = np.load(output_filepath, allow_pickle=True)
             plt.figure()
             plt.imshow(temp_arr, cmap="hot")

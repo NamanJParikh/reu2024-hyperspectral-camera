@@ -92,6 +92,7 @@ class ImageAnalysisProcessor(DataFileStreamProcessor):
     def _process_downloaded_data_file(self, datafile, lock):
         "Runs temperature analysis of image when all needed files have been streamed"
         try:
+            # construct output paths
             rel_filepath = datafile.relative_filepath
             rel_fp_str = str(rel_filepath.as_posix())
 
@@ -103,6 +104,8 @@ class ImageAnalysisProcessor(DataFileStreamProcessor):
             print(folder, file)
 
             with lock:
+                # check if all files have arrived 
+                # and that image has not already been analyzed
                 if folder not in GlobalTracker.keys():
                     GlobalTracker[folder] = FolderTracker()
 
@@ -111,10 +114,12 @@ class ImageAnalysisProcessor(DataFileStreamProcessor):
                 if (GlobalTracker[folder]).is_analyzed():
                     return None
                 if (GlobalTracker[folder]).is_ready():
+                    # perform analysis and upload result
                     temp_arr = temperature_analysis.analysis(folderpath)
                     np.save(output_filepath, temp_arr, allow_pickle=True)
                     upload_file = UploadDataFile(output_filepath, rootdir=self._output_dir)
                     upload_file.upload_whole_file(CONFIG_FILE_PATH, TOPIC_NAME)
+
                     GlobalTracker[folder].mark_analyzed()
 
         except Exception as exc:
@@ -174,6 +179,8 @@ processor_thread = Thread(
 
 if __name__ == "__main__": 
     processor_thread.start()
+
+    # Periodically remove analyzed images from the tracker
     while True:
         sleep(86400)
         for key in GlobalTracker.keys():

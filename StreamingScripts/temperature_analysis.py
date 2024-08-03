@@ -105,6 +105,9 @@ def get_bands(paths, quiet=False):
         print(f"Wavelengths: {wavelengths}")
         print(f"Removing wavelengths over 950 nm...")
 
+    # [:339] removes wavelengths 950 to 1000 nm since stray laser light 
+    # amplifies intensities at those wavelengths, so we wish to ignore them in 
+    # the fitting
     wavelengths = wavelengths[:339]
 
     return None
@@ -114,6 +117,9 @@ def compress_horiz_slice(data, start_idx, end_idx):
                      end_idx-start_idx)])
 
 def shrink_image(chunk_size=10, quiet=False):
+    """Blurs an image to reduce it's size
+    Input: chunk_size representing the number of pixels to average
+    Output: the blurred image"""
     global image
 
     for itera in range(2):
@@ -181,6 +187,10 @@ def fit_spectrum(quiet=False, check_units=True):
 ### Analysis ###
 
 def analysis(folder_path):
+    """Runs pyrometry analysis on the hyperspectral image contained in the given
+    folder path
+    Input: path to the image folder
+    Output: temperature gradient array for the image"""
     global folder
     global image
     global pixel
@@ -191,14 +201,21 @@ def analysis(folder_path):
 
     paths = construct_paths(folder)
     image = load_data(paths, quiet=True)
+
+    # Do not attempt further analysis if the image failed to load
     if type(image) == str:
         return "FAIL"
     _ = get_bands(paths, quiet=True)
 
+    # Blur the image to save time
     _ = shrink_image()
 
+    # Fit every pixel of the blurred image
     temp_arr = np.zeros((image.shape[0], image.shape[1]))
     for (i,j) in itertools.product(range(image.shape[0]), range(image.shape[1])):
+        # [:339] removes wavelengths 950 to 1000 nm since stray laser light 
+        # amplifies intensities at those wavelengths, so we wish to ignore them in 
+        # the fitting
         spectrum = image[i][j][:339]
         try:
             result, cost = fit_spectrum(quiet=True, check_units=False)
