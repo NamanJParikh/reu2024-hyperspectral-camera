@@ -1,2 +1,3 @@
 2024_08_05_12_52_02 was run for an up and down at 30 ms exposure
 2024_08_05_12_57_43 was run for 2 ups and downs at 200 ms exposure
+2024_08_05_15_36_23 2 ups and downs at 100 ms exposure
