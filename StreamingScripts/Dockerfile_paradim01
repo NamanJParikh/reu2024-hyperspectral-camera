@@ -1,5 +1,5 @@
 FROM continuumio/miniconda3
-WORKDIR /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/StreamingScripts
+WORKDIR /home/nparik15
 
 # Create the environment:
 COPY env.yml ./
