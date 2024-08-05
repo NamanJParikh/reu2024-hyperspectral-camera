@@ -5,13 +5,9 @@
 
 ### Imports ###
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
 from scipy.optimize import least_squares
-from sklearn.linear_model import LinearRegression
 import spectral.io.envi as envi
-from spectral import imshow, view_cube
-from tqdm import tqdm
 from tqdm.contrib import itertools
 from time import sleep
 
