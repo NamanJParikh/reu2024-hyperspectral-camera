@@ -1,8 +1,3 @@
-### Notes ###
-# raw files should have the .raw file extension so they can be found by spectral
-### Required Packages ###
-# SpectralPython (spectral), tqdm, NumPy, SciPy, Matplotlib
-
 ### Imports ###
 import numpy as np
 import matplotlib.pyplot as plt
