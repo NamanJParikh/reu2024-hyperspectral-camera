@@ -2,10 +2,6 @@ FROM continuumio/miniconda3
 WORKDIR /Users/namanparikh/Documents/GitHub/paradim/reu2024-hyperspectral-camera/StreamingScripts
 
 # Create the environment:
-# COPY env.yml ./
-# RUN conda env create -f env.yml
-
-# Create the environment:
 RUN conda create -n hyperspec_ldfz_analysis python=3.9
 
 # Make RUN commands use the new environment:
