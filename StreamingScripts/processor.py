@@ -75,7 +75,7 @@ TOPIC_NAME = "hyperspec_LDFZ_result"
 
 root_dir = pathlib.Path(".")
 CONFIG_FILE_PATH = root_dir / "paradim01_broker.config"
-STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "processor"
+STREAM_PROCESSOR_OUTPUT_DIR = root_dir / "hyperspec_LDFZ_data"
 
 # root_dir = pathlib.Path("/home/nparik15/")
 # CONFIG_FILE_PATH = root_dir / "config_files" / "paradim01_broker.config"
