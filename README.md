@@ -12,7 +12,10 @@ This folder contains my work and code developing a hyperspectral pyrometry metho
 This folder contains an Arduino sketch and relevant information for its dependencies and setup. The sketch programs the Raspberry Pi to respond to the camera's Hyperspec III software and move the camera down and up repeatedly for some set number of motor ticks, which can be adjusted in the sketch. The physical setup and sketch are explained in 'Documents/hyperspectral-LDFZ-motor.pdf'
 
 ## StreamingScripts
-This folder contains the scripts I use for the final data streaming and analysis. They are explained in 'Documents/hyperspectral-LDFZ-pipeline.pdf'. There is also a Dockerfile that is used to run the stream processor in a container on a PARADIM server.
+This folder contains the scripts I use for the final data streaming and analysis. They are explained in 'Documents/hyperspectral-LDFZ-pipeline.pdf'. There are also Dockerfiles used for containerizing the stream processor.
+
+## StreamProcessorContainer
+This folder contains the files used to containerize the stream processor and run it on the paradim01 server.
 
 ## OldFiles
 This folder contains notebooks I used for learning and testing data streaming and are **not needed**.
