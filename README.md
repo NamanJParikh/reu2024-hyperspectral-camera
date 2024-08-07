@@ -17,5 +17,8 @@ This folder contains the scripts I use for the final data streaming and analysis
 ## StreamProcessorContainer
 This folder contains the files used to containerize the stream processor and run it on the paradim01 server.
 
+## ProjectFinalResults
+This folder contains hyperspectral images from the LDFZ and analysis and processing of the images to generate results for my project final presentation.
+
 ## OldFiles
 This folder contains notebooks I used for learning and testing data streaming and are **not needed**.
