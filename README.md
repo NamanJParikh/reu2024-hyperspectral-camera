@@ -9,12 +9,19 @@ This folder contains documents for explaining and presenting my work. Most relev
 This folder contains my work and code developing a hyperspectral pyrometry method. There are multiple notebooks containing a variety of data processing and analysis for two images of heated graphite rods. The images are not included in the repository due to their size. There is also code from https://github.com/pytaunay/multiwavelength-pyrometry/tree/master, which I tested but ultimately did not use in the final analysis method. The final method is explained in 'Documents/hyperspectral-analysis.pdf'. **Below is an overview of each of the files in chronological order of the development of the analysis.**
 
 'SpectralPy-practice.ipynb' - this notebook was for testing the SpectralPy package for importing and manipulating hyperspectral image data. It does not contain any analysis.
+
 'graphite-rod.ipynb' - this notebook contains initial pyrometry analysis using the first graphite rod image. This is the starting point of the pyrometry analysis work.
+
 'graphite-rod-averagingframes.ipynb' - this notebook repeats the pyrometry analysis of 'graphite-rod.ipynb' but averages varying numbers of frames over time in an attempt to reduce the impact of noise in the image.
+
 'graphite-rod-offset.ipynb' - this notebook repeats the previous pyrometry analysis but adds a constant offset parameter to the blackbody equation for fitting. With this correction, a full analysis of a single point on the rod is performed to see the change in temperature over time. 
+
 'graphite_rod_2.ipynb' - this notebook repeats all of the previous pyrometry techniques using a better graphite rod image with less background light. 
+
 'graphite_rod_2_other_ideas.ipynb' - this notebook uses various other techniques including removing high noise data at lower wavelengths and not initially correcting data to get the best pyrometry analysis. This has the best results and is used in the scripts.
+
 'clean_analysis.py' - this script stores the most successful pyrometry analysis from 'graphite_rod_2_other_ideas.ipynb' without the extra attempts and testing.
+
 'vectorizing-pyrometry.ipynb' - this notebook contains a first attempt to further vectorize the pyrometry analysis to improve efficiency. It also contains comparison to the final analysis developed previously and runtime comparisons.
 
 ## MotorControl
