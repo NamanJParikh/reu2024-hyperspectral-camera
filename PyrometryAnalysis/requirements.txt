@@ -1,0 +1,5 @@
+spectral
+pandas
+matplotlib
+tqdm
+scipy
